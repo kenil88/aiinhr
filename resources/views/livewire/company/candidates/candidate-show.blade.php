@@ -87,4 +87,43 @@
         </div>
 
     </div>
+
+    <!-- ACTIVITY TIMELINE -->
+<div class="mt-6 bg-white rounded-lg shadow p-6">
+    <h2 class="text-sm font-semibold text-gray-700 mb-4">
+        Activity Timeline
+    </h2>
+
+    @if ($activities->isEmpty())
+        <p class="text-sm text-gray-500">
+            No activity recorded yet.
+        </p>
+    @else
+        <ol class="relative border-l border-gray-200">
+            @foreach ($activities as $activity)
+                <li class="mb-6 ml-4">
+                    <div
+                        class="absolute w-3 h-3 bg-indigo-500 rounded-full
+                               -left-1.5 border border-white">
+                    </div>
+
+                    <p class="text-sm font-medium text-gray-900">
+                        {{ $activity->message }}
+                    </p>
+
+                    @if ($activity->job)
+                        <p class="text-xs text-gray-500">
+                            Job: {{ $activity->job->title }}
+                        </p>
+                    @endif
+
+                    <time class="text-xs text-gray-400">
+                        {{ $activity->created_at->diffForHumans() }}
+                    </time>
+                </li>
+            @endforeach
+        </ol>
+    @endif
+</div>
+
 </div>

@@ -4,6 +4,7 @@ namespace App\Livewire\Company\Candidates;
 
 use Livewire\Component;
 use App\Models\Candidate;
+use App\Models\CandidateActivity;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
@@ -11,6 +12,7 @@ use Livewire\Attributes\Layout;
 class CandidateShow extends Component
 {
     public Candidate $candidate;
+    public $activities = [];
 
     public function mount(Candidate $candidate)
     {
@@ -20,6 +22,10 @@ class CandidateShow extends Component
         );
 
         $this->candidate = $candidate->load('applications.job');
+
+        $this->activities = CandidateActivity::where('candidate_id', $this->candidate->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function render()
