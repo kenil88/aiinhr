@@ -53,9 +53,11 @@
                 <tbody>
                     @forelse ($candidate->applications as $application)
                         <tr class="border-t">
+                            @if($application->job)
                             <td class="p-3 font-medium">
                                 {{ $application->job->title }}
                             </td>
+                            @endif
 
                             <td class="p-3">
                                 <span class="px-2 py-1 text-xs rounded bg-gray-100">

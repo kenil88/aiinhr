@@ -21,7 +21,9 @@ class CandidateShow extends Component
             403
         );
 
-        $this->candidate = $candidate->load('applications.job');
+        $this->candidate = $candidate->load(['applications' => function ($q) {
+            $q->whereNotNull('job_id')->with('job');
+        }]);
 
         $this->activities = CandidateActivity::where('candidate_id', $this->candidate->id)
             ->orderBy('created_at', 'desc')
