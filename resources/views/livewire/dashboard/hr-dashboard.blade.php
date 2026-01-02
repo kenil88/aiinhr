@@ -1,18 +1,6 @@
 <div class="p-6 space-y-6">
 
     <h1 class="text-2xl font-semibold">HR Dashboard</h1>
-    <div class="flex gap-3 mb-6">
-        <a href="#"
-        class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">
-            Upload Resume
-        </a>
-
-        <a href="#"
-        class="border px-4 py-2 rounded text-sm hover:bg-gray-50">
-            Manage Jobs
-        </a>
-    </div>
-
     <!-- KPI CARDS -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white p-5 rounded-lg shadow-sm border">
@@ -89,5 +77,5 @@
             <p class="text-sm text-gray-500">No applications yet.</p>
         @endforelse
     </div>
-
+    
 </div>
