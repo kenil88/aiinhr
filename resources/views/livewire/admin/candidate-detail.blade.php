@@ -120,7 +120,7 @@
             class="px-4 py-2 bg-indigo-600 text-white rounded text-sm">
             Generate AI Analysis
         </button>
-
+        <span wire:loading>Generating...</span>
         <p class="text-xs text-gray-500 mt-2">
             This will use AI credits and run once.
         </p>

@@ -47,6 +47,7 @@
                         <th class="p-3">Status</th>
                         <th class="p-3">Applied</th>
                         <th class="p-3">Action</th>
+                        <th class="p-3">AI</th>
                     </tr>
                 </thead>
 
@@ -74,6 +75,12 @@
                                    class="text-indigo-600 hover:underline text-sm">
                                     View Application
                                 </a>
+                            </td>
+                            <td class="p-3">
+                                @php($badge = $application->aiBadge())
+                                <span class="px-2 py-1 text-xs rounded {{ $badge['class'] }}">
+                                    {{ $badge['label'] }}
+                                </span>
                             </td>
                         </tr>
                     @empty
