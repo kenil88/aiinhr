@@ -37,4 +37,9 @@ class Candidate extends Model
             ]);
         });
     }
+
+    public function notes()
+    {
+        return $this->hasMany(CandidateNote::class)->latest();
+    }
 }

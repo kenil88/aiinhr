@@ -98,41 +98,87 @@
     </div>
 
     <!-- ACTIVITY TIMELINE -->
-<div class="mt-6 bg-white rounded-lg shadow p-6">
-    <h2 class="text-sm font-semibold text-gray-700 mb-4">
-        Activity Timeline
-    </h2>
+    <div class="mt-6 bg-white rounded-lg shadow p-6">
+        <h2 class="text-sm font-semibold text-gray-700 mb-4">
+            Activity Timeline
+        </h2>
 
-    @if ($activities->isEmpty())
-        <p class="text-sm text-gray-500">
-            No activity recorded yet.
-        </p>
-    @else
-        <ol class="relative border-l border-gray-200">
-            @foreach ($activities as $activity)
-                <li class="mb-6 ml-4">
-                    <div
-                        class="absolute w-3 h-3 bg-indigo-500 rounded-full
-                               -left-1.5 border border-white">
-                    </div>
+        @if ($activities->isEmpty())
+            <p class="text-sm text-gray-500">
+                No activity recorded yet.
+            </p>
+        @else
+            <ol class="relative border-l border-gray-200">
+                @foreach ($activities as $activity)
+                    <li class="mb-6 ml-4">
+                        <div
+                            class="absolute w-3 h-3 bg-indigo-500 rounded-full
+                                -left-1.5 border border-white">
+                        </div>
 
-                    <p class="text-sm font-medium text-gray-900">
-                        {{ $activity->message }}
+                        <p class="text-sm font-medium text-gray-900">
+                            {{ $activity->message }}
+                        </p>
+
+                        @if ($activity->job)
+                            <p class="text-xs text-gray-500">
+                                Job: {{ $activity->job->title }}
+                            </p>
+                        @endif
+
+                        <time class="text-xs text-gray-400">
+                            {{ $activity->created_at->diffForHumans() }}
+                        </time>
+                    </li>
+                @endforeach
+            </ol>
+        @endif
+    </div>
+
+    <div class="bg-white rounded-lg shadow mt-6">
+        <div class="p-4 border-b font-semibold">
+            Internal Notes
+        </div>
+
+        <div class="p-4 space-y-4">
+
+            <!-- Add Note -->
+            <div>
+               <textarea
+                    wire:model.defer="noteText"
+                    rows="3"
+                    class="w-full border rounded px-3 py-2 text-sm"
+                    placeholder="Add an internal note..."></textarea>
+
+                @error('newNote')
+                    <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                @enderror
+
+                <button
+                    wire:click="addNote"
+                    class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded text-sm">
+                    Add Note
+                </button>
+            </div>
+
+            <!-- Notes List -->
+            @forelse ($candidate->notes as $note)
+                <div class="border rounded p-3 text-sm bg-gray-50">
+                    <p class="text-gray-800">
+                        {{ $note->note }}
                     </p>
 
-                    @if ($activity->job)
-                        <p class="text-xs text-gray-500">
-                            Job: {{ $activity->job->title }}
-                        </p>
-                    @endif
-
-                    <time class="text-xs text-gray-400">
-                        {{ $activity->created_at->diffForHumans() }}
-                    </time>
-                </li>
-            @endforeach
-        </ol>
-    @endif
-</div>
+                    <p class="text-xs text-gray-500 mt-1">
+                        — {{ $note->user->name }},
+                        {{ $note->created_at->diffForHumans() }}
+                    </p>
+                </div>
+            @empty
+                <p class="text-sm text-gray-500">
+                    No notes yet.
+                </p>
+            @endforelse
+        </div>
+    </div>
 
 </div>
