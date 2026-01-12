@@ -31,4 +31,8 @@ class Job extends Model
     {
         return $this->hasMany(Application::class);
     }
+    public function stages()
+    {
+        return $this->hasMany(HiringStage::class)->orderBy('sort_order');
+    }
 }

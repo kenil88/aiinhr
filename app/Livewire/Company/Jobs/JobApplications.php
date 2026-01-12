@@ -5,6 +5,8 @@ namespace App\Livewire\Company\Jobs;
 use Livewire\Component;
 use App\Models\Job;
 use App\Models\Application;
+use App\Models\CandidateActivity;
+use App\Models\HiringStage;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
@@ -21,15 +23,51 @@ class JobApplications extends Component
             403
         );
 
-        $this->job = $job;
+        $this->job = $job->load([
+            'stages' => fn($q) => $q->where('is_active', true)->orderBy('sort_order'),
+            'applications.candidate',
+            'applications.stage',
+        ]);
+    }
+
+    public function updateStage($applicationId, $stageId)
+    {
+        abort_if(Auth::user()->isViewer(), 403);
+
+        $application = Application::where('id', $applicationId)
+            ->where('job_id', $this->job->id)
+            ->firstOrFail();
+
+        $stage = HiringStage::where('id', $stageId)
+            ->where('job_id', $this->job->id)
+            ->firstOrFail();
+
+        // Prevent unnecessary updates
+        if ($application->stage_id === $stage->id) {
+            return;
+        }
+
+        $oldStage = $application->stage?->name ?? 'None';
+
+        $application->update([
+            'stage_id' => $stage->id,
+        ]);
+
+        // Log activity
+        CandidateActivity::create([
+            'company_id' => Auth::user()->company_id,
+            'candidate_id' => $application->candidate_id,
+            'user_id' => Auth::id(),
+            'type' => 'stage_changed',
+            'message' => "Stage changed from {$oldStage} to {$stage->name}",
+        ]);
     }
 
     public function render()
     {
         return view('livewire.company.jobs.job-applications', [
-            'applications' => Application::where('job_id', $this->job->id)
-                ->latest()
-                ->get(),
+            'applications' => $this->job->applications,
+            'stages' => $this->job->stages,
         ]);
     }
 }

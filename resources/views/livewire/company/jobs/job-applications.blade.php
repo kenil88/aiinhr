@@ -24,6 +24,7 @@
                     <th class="p-3 text-left">Candidate</th>
                     <th class="p-3">Email</th>
                     <th class="p-3">Status</th>
+                    <th class="p-3">Stage</th>
                     <th class="p-3">Applied</th>
                     <th class="p-3">Action</th>
                 </tr>
@@ -46,7 +47,27 @@
                                 {{ ucfirst($app->status) }}
                             </span>
                         </td>
-
+                        <td class="p-3">
+                            @if (!auth()->user()->isViewer())
+                                <select
+                                    wire:change="updateStage({{ $app->id }}, $event.target.value)"
+                                    class="border rounded px-2 py-1 text-sm"
+                                >
+                                    @foreach ($stages as $stage)
+                                        <option
+                                            value="{{ $stage->id }}"
+                                            @selected($app->stage_id === $stage->id)
+                                        >
+                                            {{ $stage->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <span class="px-2 py-1 text-xs rounded bg-gray-100">
+                                    {{ $app->stage?->name ?? '—' }}
+                                </span>
+                            @endif
+                        </td>
                         <td class="p-3">
                             {{ $app->created_at->format('d M Y') }}
                         </td>

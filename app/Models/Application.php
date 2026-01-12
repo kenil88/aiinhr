@@ -46,4 +46,8 @@ class Application extends Model
 
         return ['label' => 'AI ' . $this->overall_score, 'class' => 'bg-red-100 text-red-700'];
     }
+    public function stage()
+    {
+        return $this->belongsTo(HiringStage::class);
+    }
 }

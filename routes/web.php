@@ -16,6 +16,7 @@ use App\Livewire\Company\TeamMembers;
 use App\Livewire\Dashboard\HrDashboard;
 use App\Livewire\Company\Jobs\JobForm;
 use App\Livewire\Company\Jobs\JobsIndex as CompanyJobsIndex;
+use App\Livewire\Company\Jobs\JobStages;
 use App\Livewire\Company\Profile\CompanyProfileView;
 use App\Livewire\Company\Settings\CompanyProfile;
 
@@ -76,6 +77,9 @@ Route::middleware(['auth', 'active', 'company'])
         Route::get('/settings/profile', CompanyProfile::class)
             ->middleware('role:owner')
             ->name('profile.edit');
+
+        Route::get('/company/jobs/{job}/stages', JobStages::class)
+            ->name('company.jobs.stages');
     });
 
 
