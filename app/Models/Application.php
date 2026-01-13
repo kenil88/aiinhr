@@ -14,6 +14,7 @@ class Application extends Model
         'status',
         'overall_score',
         'ai_result',
+        'stage_id',
     ];
 
     protected $casts = [

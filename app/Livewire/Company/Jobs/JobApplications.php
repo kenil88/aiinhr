@@ -15,6 +15,8 @@ class JobApplications extends Component
 {
     public Job $job;
 
+    public $stageSelections = [];
+
     public function mount(Job $job)
     {
         // Security: ensure job belongs to company
@@ -22,6 +24,11 @@ class JobApplications extends Component
             $job->company_id !== Auth::user()->company_id,
             403
         );
+
+        foreach ($this->job->applications as $application) {
+            $this->stageSelections[$application->id] = $application->stage_id;
+        }
+
 
         $this->job = $job->load([
             'stages' => fn($q) => $q->where('is_active', true)->orderBy('sort_order'),
@@ -57,6 +64,7 @@ class JobApplications extends Component
         CandidateActivity::create([
             'company_id' => Auth::user()->company_id,
             'candidate_id' => $application->candidate_id,
+            'job_id' => $this->job->id,
             'user_id' => Auth::id(),
             'type' => 'stage_changed',
             'message' => "Stage changed from {$oldStage} to {$stage->name}",
@@ -66,8 +74,16 @@ class JobApplications extends Component
     public function render()
     {
         return view('livewire.company.jobs.job-applications', [
-            'applications' => $this->job->applications,
-            'stages' => $this->job->stages,
+            'applications' => $this->job
+                ->applications()
+                ->with(['stage', 'candidate'])
+                ->get(),
+
+            'stages' => $this->job
+                ->stages()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->get(),
         ]);
     }
 }
