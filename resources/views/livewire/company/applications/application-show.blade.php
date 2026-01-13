@@ -38,7 +38,7 @@
                 <p>
                     <strong>Status:</strong>
                     <span class="px-2 py-1 text-xs rounded bg-gray-100">
-                        {{ ucfirst($application->status) }}
+                        {{ ucfirst($application->stage->name ?? '--') }}
                     </span>
                 </p>
             </div>
@@ -82,7 +82,7 @@
                 </h2>
 
                 <p><strong>Job:</strong> {{ $application->job->title }}</p>
-                <p><strong>Job Status:</strong> {{ ucfirst($application->job->status) }}</p>
+                <p><strong>Job Stage:</strong> {{ ucfirst($application->job->status) }}</p>
                 <p><strong>Applied On:</strong>
                     {{ $application->created_at->format('d M Y') }}
                 </p>
@@ -91,19 +91,26 @@
             <!-- Pipeline -->
             <div class="bg-white rounded-lg shadow p-4 space-y-3">
                 <h2 class="text-sm font-semibold text-gray-700">
-                    Pipeline Status
+                    Pipeline Stage
                 </h2>
 
-                <select wire:model="status"
-                        wire:change="updateStatus"
-                        class="w-full border rounded px-3 py-2 text-sm
-                               focus:ring-indigo-500">
-                    <option value="new">New</option>
-                    <option value="shortlisted">Shortlisted</option>
-                    <option value="interview">Interview</option>
-                    <option value="hired">Hired</option>
-                    <option value="rejected">Rejected</option>
-                </select>
+                @if (!auth()->user()->isViewer())
+                    <select
+                        wire:model="stageId"
+                        wire:change="updateStage"
+                        class="w-full border rounded px-3 py-2 text-sm focus:ring-indigo-500"
+                    >
+                        @foreach ($stages as $stage)
+                            <option value="{{ $stage->id }}">
+                                {{ $stage->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                @else
+                    <span class="px-2 py-1 text-xs rounded bg-gray-100">
+                        {{ $application->stage?->name ?? '—' }}
+                    </span>
+                @endif
 
                 @if (session()->has('success'))
                     <p class="text-xs text-green-600">
@@ -111,6 +118,7 @@
                     </p>
                 @endif
             </div>
+
 
         </div>
 

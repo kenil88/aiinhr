@@ -44,7 +44,7 @@
                         <td class="p-3">
                             <span class="px-2 py-1 text-xs rounded
                                 bg-gray-100 text-gray-700">
-                                {{ ucfirst($app->status) }}
+                                {{ ucfirst($app->stage->name ?? '—') }}
                             </span>
                         </td>
                         <td class="p-3">

@@ -11,7 +11,8 @@ use Livewire\Attributes\Layout;
 class ApplicationShow extends Component
 {
     public Application $application;
-    public $status;
+    public $stages = [];
+    public $stageId;
 
     public function mount(Application $application)
     {
@@ -22,7 +23,12 @@ class ApplicationShow extends Component
         );
 
         $this->application = $application;
-        $this->status = $application->status;
+        $this->stages = $this->application->job
+            ->stages()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+        $this->stageId = $this->application->stage_id;
     }
 
     public function render()
@@ -30,16 +36,29 @@ class ApplicationShow extends Component
         return view('livewire.company.applications.application-show');
     }
 
-    public function updateStatus()
+    public function updateStage()
     {
-        $allowed = ['new', 'shortlisted', 'interview', 'hired', 'rejected'];
+        abort_if(auth()->user()->isViewer(), 403);
 
-        abort_unless(in_array($this->status, $allowed), 403);
+        if (!$this->stageId || $this->stageId == $this->application->stage_id) {
+            return;
+        }
+
+        $stage = $this->stages->firstWhere('id', $this->stageId);
+
+        if (!$stage) {
+            return;
+        }
+
+        $old = $this->application->stage?->name ?? 'None';
 
         $this->application->update([
-            'status' => $this->status,
+            'stage_id' => $stage->id,
         ]);
 
-        session()->flash('success', 'Candidate status updated.');
+        // optional activity log
+        // CandidateActivity::create([...]);
+
+        session()->flash('success', 'Stage updated successfully.');
     }
 }
