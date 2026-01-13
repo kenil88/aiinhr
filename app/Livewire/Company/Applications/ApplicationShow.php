@@ -4,6 +4,7 @@ namespace App\Livewire\Company\Applications;
 
 use Livewire\Component;
 use App\Models\Application;
+use App\Models\CandidateActivity;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
@@ -13,6 +14,7 @@ class ApplicationShow extends Component
     public Application $application;
     public $stages = [];
     public $stageId;
+    public $timeline = [];
 
     public function mount(Application $application)
     {
@@ -22,13 +24,18 @@ class ApplicationShow extends Component
             403
         );
 
-        $this->application = $application;
+        $this->application = $application->load(['candidate', 'job', 'stage']);
         $this->stages = $this->application->job
             ->stages()
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->get();
         $this->stageId = $this->application->stage_id;
+
+        $this->timeline = CandidateActivity::where('application_id', $this->application->id)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     public function render()

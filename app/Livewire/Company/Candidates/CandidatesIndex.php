@@ -140,9 +140,10 @@ class CandidatesIndex extends Component
         CandidateActivity::create([
             'company_id' => Auth::user()->company_id,
             'candidate_id' => $this->selectedCandidateId,
+            'application_id' => null,
             'job_id' => $this->selectedJobId,
             'type' => 'job_assigned',
-            'message' => 'Assigned to job',
+            'message' => 'Candidate Assigned to job',
         ]);
 
         session()->flash('success', 'Candidate assigned to job successfully.');
@@ -204,6 +205,15 @@ class CandidatesIndex extends Component
             'resume_path' => $path,
         ]);
 
+        CandidateActivity::create([
+            'company_id' => Auth::user()->company_id,
+            'candidate_id' => $application->candidate_id,
+            'application_id' => null,
+            'job_id' => $application->job_id,
+            'type' => 'resume_uploaded',
+            'message' => 'Resume uploaded to talent pool',
+        ]);
+
         // 5️⃣ UX: close upload modal, open preview
         $this->showResumeModal = false;
         $this->resumePreviewPath = $path;
@@ -214,14 +224,6 @@ class CandidatesIndex extends Component
         $this->resumeCandidateId = null;
 
         session()->flash('success', 'Resume uploaded successfully.');
-
-        CandidateActivity::create([
-            'company_id' => Auth::user()->company_id,
-            'candidate_id' => $application->candidate_id,
-            'job_id' => $application->job_id,
-            'type' => 'resume_uploaded',
-            'message' => 'Resume uploaded',
-        ]);
     }
 
     public function updated($property)

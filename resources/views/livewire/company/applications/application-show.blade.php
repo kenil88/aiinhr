@@ -123,4 +123,41 @@
         </div>
 
     </div>
+
+    <!-- APPLICATION TIMELINE -->
+    <div class="bg-white rounded-lg shadow p-6 mt-6">
+        <h2 class="text-sm font-semibold text-gray-700 mb-4">
+            Application Timeline
+        </h2>
+
+        <div class="space-y-4">
+            @forelse ($timeline as $event)
+                <div class="flex gap-3">
+                    <!-- Dot -->
+                    <div class="mt-1">
+                        <span class="inline-block w-2 h-2 rounded-full bg-indigo-600"></span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="text-sm">
+                        <p class="text-gray-800">
+                            {{ $event->message }}
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            {{ $event->created_at->diffForHumans() }}
+                            @if ($event->user)
+                                · {{ $event->user->name }}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            @empty
+                <p class="text-sm text-gray-500">
+                    No activity yet.
+                </p>
+            @endforelse
+        </div>
+    </div>
+
 </div>
