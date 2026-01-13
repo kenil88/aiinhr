@@ -25,26 +25,43 @@ class JobForm extends Component
     public function mount(?Job $job = null)
     {
         if ($job) {
+            // Security: ensure job belongs to company
+            abort_if(
+                $job->company_id !== Auth::user()->company_id,
+                403
+            );
             $this->job = $job;
-            $this->fill($job->toArray());
+            $this->fill($job);
         }
     }
 
     public function save()
     {
-        $this->validate([
-            'title' => 'required|min:3',
-            'description' => 'required|min:10',
-            'status' => 'required|in:open,closed',
-            'department' => 'nullable|string|max:255',
-            'location' => 'nullable|string|max:255',
-            'employment_type' => 'required|in:full-time,part-time,contract,internship',
-            'experience_level' => 'nullable|in:junior,mid,senior,lead',
-            'salary_min' => 'nullable|integer|min:0',
-            'salary_max' => 'nullable|integer|min:0|gte:salary_min',
-        ]);
 
-        Job::updateOrCreate(
+        $this->validate(
+            [
+                'title' => 'required|min:3',
+                'description' => 'required|min:10',
+                'status' => 'required|in:open,closed',
+                'department' => 'nullable|string|max:255',
+                'location' => 'nullable|string|max:255',
+                'employment_type' => 'required|in:full-time,part-time,contract,internship',
+                'experience_level' => 'nullable|in:junior,mid,senior,lead',
+                'salary_min' => 'nullable|integer|min:0',
+                'salary_max' => 'nullable|integer|min:0|gte:salary_min',
+            ],
+            [
+                'title.required' => 'The job title is required.',
+                'title.min' => 'The job title must be at least 3 characters long.',
+                'description.required' => 'A job description is required.',
+                'description.min' => 'The job description must be at least 10 characters long.',
+                'status.required' => 'Please select a status for the job.',
+                'employment_type.required' => 'Please select an employment type.',
+                'salary_max.gte' => 'The maximum salary must be greater than or equal to the minimum salary.',
+            ]
+        );
+
+        $job = Job::updateOrCreate(
             ['id' => optional($this->job)->id],
             [
                 'company_id' => Auth::user()->company_id,
@@ -60,6 +77,28 @@ class JobForm extends Component
                 'created_by' => Auth::id(),
             ]
         );
+
+        // 🔥 Create default stages ONLY for new job
+        if ($job->wasRecentlyCreated) {
+
+            $defaultStages = [
+                ['name' => 'New', 'sort_order' => 1],
+                ['name' => 'Shortlisted', 'sort_order' => 2],
+                ['name' => 'Interview', 'sort_order' => 3],
+                ['name' => 'Hired', 'sort_order' => 4],
+                ['name' => 'Rejected', 'sort_order' => 5],
+            ];
+
+            foreach ($defaultStages as $stage) {
+                $job->stages()->create([
+                    'company_id' => Auth::user()->company_id,
+                    'name' => $stage['name'],
+                    'sort_order' => $stage['sort_order'],
+                    'is_active' => true,
+                ]);
+            }
+        }
+
 
         return redirect()->route('company.jobs');
     }

@@ -44,7 +44,7 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="p-3 text-left">Job</th>
-                        <th class="p-3">Status</th>
+                        <th class="p-3">Stage</th>
                         <th class="p-3">Applied</th>
                         <th class="p-3">Action</th>
                         <th class="p-3">AI</th>
@@ -62,7 +62,7 @@
 
                             <td class="p-3">
                                 <span class="px-2 py-1 text-xs rounded bg-gray-100">
-                                    {{ ucfirst(str_replace('_', ' ', $application->status)) }}
+                                    {{ $application->stage?->name ?? 'N/A' }}
                                 </span>
                             </td>
 

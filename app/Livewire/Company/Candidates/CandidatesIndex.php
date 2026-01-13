@@ -117,7 +117,7 @@ class CandidatesIndex extends Component
             // 3️⃣ Convert placeholder → real application
             $placeholder->update([
                 'job_id' => $this->selectedJobId,
-                'status' => 'new',
+                'stage_id' => 1,
             ]);
         } else {
             // 4️⃣ Create new application if no placeholder exists
@@ -125,17 +125,11 @@ class CandidatesIndex extends Component
                 'company_id' => Auth::user()->company_id,
                 'candidate_id' => $this->selectedCandidateId,
                 'job_id' => $this->selectedJobId,
-                'status' => 'new',
+                'stage_id' => 1,
             ]);
         }
 
-        // 5️⃣ Reset modal state
-        $this->reset([
-            'showAssignModal',
-            'selectedJobId',
-            'selectedCandidateId',
-            'appliedJobIds',
-        ]);
+
         // 6️⃣ Log activity
         CandidateActivity::create([
             'company_id' => Auth::user()->company_id,
@@ -145,7 +139,13 @@ class CandidatesIndex extends Component
             'type' => 'job_assigned',
             'message' => 'Candidate Assigned to job',
         ]);
-
+        // 5️⃣ Reset modal state
+        $this->reset([
+            'showAssignModal',
+            'selectedJobId',
+            'selectedCandidateId',
+            'appliedJobIds',
+        ]);
         session()->flash('success', 'Candidate assigned to job successfully.');
     }
 

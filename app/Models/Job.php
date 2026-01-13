@@ -20,6 +20,7 @@ class Job extends Model
         'salary_min',
         'salary_max',
         'status',
+        'created_by',
     ];
 
     public function company()

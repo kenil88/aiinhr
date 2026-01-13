@@ -2,6 +2,11 @@
     <h1 class="text-2xl font-semibold mb-6">
         {{ $job ? 'Edit Job' : 'Create Job' }}
     </h1>
+    @if (session()->has('success'))
+        <div class="mb-4 rounded bg-green-50 border border-green-200 px-4 py-3 text-green-700 text-sm">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="bg-white rounded-lg shadow p-6 space-y-6">
 
@@ -12,17 +17,26 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input wire:model="title"
-                       class="form-input"
-                       placeholder="Job Title">
+                <div>
+                    <input wire:model="title"
+                           class="form-input w-full"
+                           placeholder="Job Title">
+                    @error('title') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
 
-                <input wire:model="department"
-                       class="form-input"
-                       placeholder="Department">
+                <div>
+                    <input wire:model="department"
+                           class="form-input w-full"
+                           placeholder="Department">
+                    @error('department') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
 
-                <input wire:model="location"
-                       class="form-input"
-                       placeholder="Location">
+                <div>
+                    <input wire:model="location"
+                           class="form-input w-full"
+                           placeholder="Location">
+                    @error('location') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
             </div>
         </div>
 
@@ -33,25 +47,34 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <select wire:model="employment_type" class="form-select">
-                    <option value="full-time">Full Time</option>
-                    <option value="part-time">Part Time</option>
-                    <option value="contract">Contract</option>
-                    <option value="internship">Internship</option>
-                </select>
+                <div>
+                    <select wire:model="employment_type" class="form-select w-full">
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time</option>
+                        <option value="contract">Contract</option>
+                        <option value="internship">Internship</option>
+                    </select>
+                    @error('employment_type') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
 
-                <select wire:model="experience_level" class="form-select">
-                    <option value="">Experience Level</option>
-                    <option value="junior">Junior</option>
-                    <option value="mid">Mid</option>
-                    <option value="senior">Senior</option>
-                    <option value="lead">Lead</option>
-                </select>
+                <div>
+                    <select wire:model="experience_level" class="form-select w-full">
+                        <option value="">Experience Level</option>
+                        <option value="junior">Junior</option>
+                        <option value="mid">Mid</option>
+                        <option value="senior">Senior</option>
+                        <option value="lead">Lead</option>
+                    </select>
+                    @error('experience_level') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
 
-                <select wire:model="status" class="form-select">
-                    <option value="open">Open</option>
-                    <option value="closed">Closed</option>
-                </select>
+                <div>
+                    <select wire:model="status" class="form-select w-full">
+                        <option value="open">Open</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                    @error('status') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
             </div>
         </div>
 
@@ -62,15 +85,21 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input wire:model="salary_min"
-                       type="number"
-                       class="form-input"
-                       placeholder="Salary Min">
+                <div>
+                    <input wire:model="salary_min"
+                           type="number"
+                           class="form-input w-full"
+                           placeholder="Salary Min">
+                    @error('salary_min') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
 
-                <input wire:model="salary_max"
-                       type="number"
-                       class="form-input"
-                       placeholder="Salary Max">
+                <div>
+                    <input wire:model="salary_max"
+                           type="number"
+                           class="form-input w-full"
+                           placeholder="Salary Max">
+                    @error('salary_max') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                </div>
             </div>
         </div>
 
@@ -84,6 +113,7 @@
                       rows="6"
                       class="form-textarea"
                       placeholder="Describe the role, responsibilities, requirements..."></textarea>
+            @error('description') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <!-- ACTION -->
