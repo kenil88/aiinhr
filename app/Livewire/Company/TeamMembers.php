@@ -3,6 +3,7 @@
 namespace App\Livewire\Company;
 
 use App\Models\User;
+use App\Support\CompanyLimits;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -29,6 +30,14 @@ class TeamMembers extends Component
 
     public function invite()
     {
+
+        $company = Auth::user()->company;
+
+        if (! CompanyLimits::canAddTeamMember($company)) {
+            $this->addError('limit', 'You have reached the maximum number of team members allowed for your plan.');
+            return;
+        }
+
         // Validate input
         $this->validate([
             'name' => 'required|string|min:2',
@@ -37,7 +46,7 @@ class TeamMembers extends Component
                 'email',
                 function ($attribute, $value, $fail) {
                     $exists = User::where('email', $value)
-                        ->where('company_id', auth()->user()->company_id)
+                        ->where('company_id', Auth::user()->company_id)
                         ->exists();
 
                     if ($exists) {
@@ -56,7 +65,7 @@ class TeamMembers extends Component
             'email' => $this->email,
             'password' => Hash::make($password),
             'role' => $this->role,
-            'company_id' => auth()->user()->company_id,
+            'company_id' => Auth::user()->company_id,
         ]);
 
         $this->generatedPassword = $password;
@@ -146,5 +155,10 @@ class TeamMembers extends Component
         $user->update(['role' => $role]);
 
         session()->flash('success', 'Role updated successfully.');
+    }
+
+    public function getCanAddTeamMemberProperty(): bool
+    {
+        return CompanyLimits::canAddTeamMember(Auth::user()->company);
     }
 }
