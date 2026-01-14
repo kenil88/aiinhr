@@ -5,6 +5,7 @@ namespace App\Livewire\Company\Candidates;
 use App\Models\Application;
 use App\Models\Candidate;
 use App\Models\CandidateActivity;
+use App\Support\CompanyLimits;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -32,6 +33,8 @@ class CandidatesIndex extends Component
     public $search = '';
     public $perPage = 10;
     public $resumeFilter = 'all';
+    public $showCreateModal = false;
+    public $name, $email, $phone;
 
     public function render()
     {
@@ -193,7 +196,7 @@ class CandidatesIndex extends Component
                 'company_id' => Auth::user()->company_id,
                 'candidate_id' => $this->resumeCandidateId,
                 'job_id' => null, // sourced / talent pool
-                'status' => 'new',
+                'stage_id' => 1,
             ]);
         }
 
@@ -231,5 +234,61 @@ class CandidatesIndex extends Component
         if (in_array($property, ['search', 'resumeFilter', 'perPage'])) {
             $this->resetPage();
         }
+    }
+
+    public function getCanAddCandidateProperty()
+    {
+        return CompanyLimits::canAddCandidate(Auth::user()->company);
+    }
+
+
+
+    public function openCreateModal()
+    {
+        $this->reset(['name', 'email', 'phone', 'resume']);
+        $this->showCreateModal = true;
+    }
+
+    public function createCandidate()
+    {
+        if (!CompanyLimits::canAddCandidate(auth()->user()->company)) {
+            $this->addError('limit', 'Candidate limit reached.');
+            return;
+        }
+
+        $this->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'nullable|string|max:20',
+            'resume' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+        ]);
+
+        $candidate = Candidate::create([
+            'company_id' => auth()->user()->company_id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+        ]);
+
+        if ($this->resume) {
+            $path = $this->resume->store('resumes', 'public');
+
+            Application::create([
+                'company_id' => auth()->user()->company_id,
+                'candidate_id' => $candidate->id,
+                'job_id' => null,
+                'resume_path' => $path,
+            ]);
+        }
+
+        CandidateActivity::create([
+            'company_id' => auth()->user()->company_id,
+            'candidate_id' => $candidate->id,
+            'type' => 'created',
+            'message' => 'Candidate added to talent pool',
+        ]);
+
+        $this->showCreateModal = false;
+        session()->flash('success', 'Candidate added successfully.');
     }
 }

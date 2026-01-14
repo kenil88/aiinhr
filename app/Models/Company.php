@@ -31,4 +31,9 @@ class Company extends Model
     {
         return $this->hasMany(Job::class);
     }
+
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
 }
