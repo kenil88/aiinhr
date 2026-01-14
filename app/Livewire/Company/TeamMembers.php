@@ -60,13 +60,15 @@ class TeamMembers extends Component
         // Generate a random password
         $password = Str::random(10);
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($password),
             'role' => $this->role,
             'company_id' => Auth::user()->company_id,
         ]);
+
+        $user->sendPasswordResetNotification(app('auth.password.broker')->createToken($user));
 
         $this->generatedPassword = $password;
 
