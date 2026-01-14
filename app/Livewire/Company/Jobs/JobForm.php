@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Company\Jobs;
 
+use App\Models\Company;
 use Livewire\Component;
 use App\Models\Job;
+use App\Support\CompanyLimits;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
@@ -37,6 +39,12 @@ class JobForm extends Component
 
     public function save()
     {
+        $company = Auth::user()->company;
+
+        if (!CompanyLimits::canCreateJob($company)) {
+            $this->addError('limit', 'You have reached the maximum number of jobs allowed for your plan.');
+            return;
+        }
 
         $this->validate(
             [

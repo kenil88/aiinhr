@@ -17,6 +17,17 @@
             </a>
         </div>
     </div>
+    @if ($errors->has('limit'))
+        <div class="bg-yellow-50 border border-yellow-300 text-yellow-800
+                    px-4 py-2 rounded mb-4 text-sm">
+            {{ $errors->first('limit') }}
+            <br>
+            <span class="text-xs">
+                Upgrade will be available soon.
+            </span>
+        </div>
+    @endif
+
 
     @if (session()->has('success'))
         <div class="mb-6 rounded-md bg-green-50 p-4 border border-green-200">

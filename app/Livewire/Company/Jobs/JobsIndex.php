@@ -3,6 +3,7 @@
 namespace App\Livewire\Company\Jobs;
 
 use App\Models\Job;
+use App\Support\CompanyLimits;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -28,6 +29,12 @@ class JobsIndex extends Component
                 ->withCount('applications')
                 ->latest()
                 ->get(),
+            'canCreateJob' => CompanyLimits::canCreateJob(Auth::user()->company),
         ]);
+    }
+
+    public function getCanCreateJobProperty()
+    {
+        return CompanyLimits::canCreateJob(auth()->user()->company);
     }
 }
