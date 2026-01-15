@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             OwnerSeeder::class,
             JobSeeder::class,
             ApplicationSeeder::class,
-            CandidateSeeder::class
+            CandidateSeeder::class,
+            RequisitionSeeder::class,
         ]);
     }
 }

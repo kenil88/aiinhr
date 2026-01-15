@@ -19,6 +19,8 @@ use App\Livewire\Company\Jobs\JobsIndex as CompanyJobsIndex;
 use App\Livewire\Company\Jobs\JobStages;
 use App\Livewire\Company\Profile\CompanyProfileView;
 use App\Livewire\Company\Settings\CompanyProfile;
+use App\Livewire\Company\Requisitions\RequisitionCreate;
+use App\Livewire\Company\Requisitions\RequisitionsIndex;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,6 +127,15 @@ Route::middleware(['auth', 'admin'])
             ->name('applications.show');
     });
 
+
+
+Route::middleware(['auth', 'verified', 'company'])
+    ->get('/company/requisitions/create', RequisitionCreate::class)
+    ->name('company.requisitions.create');
+
+Route::middleware(['auth', 'verified', 'company'])
+    ->get('/company/requisitions', RequisitionsIndex::class)
+    ->name('company.requisitions.index');
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
