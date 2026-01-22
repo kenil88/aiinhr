@@ -26,16 +26,37 @@ class JobForm extends Component
 
     public function mount(?Job $job = null)
     {
-        if ($job) {
-            // Security: ensure job belongs to company
-            abort_if(
-                $job->company_id !== Auth::user()->company_id,
-                403
-            );
-            $this->job = $job;
-            $this->fill($job);
+        if (! $job) {
+            return;
         }
+
+        // 🔒 Security: ensure job belongs to logged-in company
+        abort_if(
+            $job->company_id !== Auth::user()->company_id,
+            403
+        );
+
+        $this->job = $job;
+
+        // Fill scalar fields first
+        $this->fill([
+            'title'             => $job->title,
+            'department'        => $job->department,
+            'location'          => $job->location,
+            'employment_type'   => $job->employment_type,
+            'experience_level'  => $job->experience_level,
+            'status'            => $job->status,
+            'salary_min'        => $job->salary_min,
+            'salary_max'        => $job->salary_max,
+        ]);
+
+        // 🔥 Handle CKEditor field separately
+        $this->description = $job->description;
+
+        // Sync editor after hydration
+        $this->dispatch('refreshEditor', $this->description);
     }
+
 
     public function save()
     {
@@ -106,7 +127,6 @@ class JobForm extends Component
                 ]);
             }
         }
-
 
         return redirect()->route('company.jobs');
     }

@@ -87,10 +87,10 @@
                         <label for="employment_type" class="block text-sm font-medium text-gray-700">Employment Type</label>
                         <div class="mt-1">
                             <select id="employment_type" wire:model="employment_type" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                                <option value="full-time">Full Time</option>
-                                <option value="part-time">Part Time</option>
+                                <option value="full_time">Full Time</option>
+                                <option value="part_time">Part Time</option>
                                 <option value="contract">Contract</option>
-                                <option value="internship">Internship</option>
+                                <option value="intern">Intern</option>
                             </select>
                         </div>
                         @error('employment_type') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
@@ -99,7 +99,7 @@
                     <div class="sm:col-span-2">
                         <label for="experience_level" class="block text-sm font-medium text-gray-700">Experience Level</label>
                         <div class="mt-1">
-                            <select id="experience_level" wire:model="experience_level" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                            <select id="experience_level" wire:model.defer="experience_level" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                                 <option value="">Select Level</option>
                                 <option value="junior">Junior</option>
                                 <option value="mid">Mid</option>
@@ -113,7 +113,8 @@
                     <div class="sm:col-span-2">
                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                         <div class="mt-1">
-                            <select id="status" wire:model="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                            <select id="status" wire:model.defer="status" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <option value="draft">Draft</option>
                                 <option value="open">Open</option>
                                 <option value="closed">Closed</option>
                             </select>
@@ -132,7 +133,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <input type="number" wire:model="salary_min" id="salary_min" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
+                            <input type="number" wire:model.defer="salary_min" id="salary_min" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
                         </div>
                         @error('salary_min') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
@@ -143,7 +144,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-gray-500 sm:text-sm">$</span>
                             </div>
-                            <input type="number" wire:model="salary_max" id="salary_max" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
+                            <input type="number" wire:model.defer="salary_max" id="salary_max" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 sm:text-sm border-gray-300 rounded-md" placeholder="0.00">
                         </div>
                         @error('salary_max') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
@@ -154,7 +155,7 @@
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Job Description</h3>
                 <div class="mt-6">
                     <div wire:ignore>
-                        <textarea id="editor" wire:model="description" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                        <textarea id="editor" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
                     </div>
                     @error('description') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
@@ -169,28 +170,28 @@
     </div>
 
   <script>
-    document.addEventListener('livewire:init', () => {
+document.addEventListener('livewire:init', () => {
 
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .then(editor => {
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
 
-                // Set initial value
-                editor.model.document.on('change:data', () => {
-                    @this.set('description', editor.getData(), false);
-                });
+            // 🔥 SET INITIAL CONTENT
+            editor.setData(@js($description ?? ''));
 
-                // Optional: update editor if Livewire changes value
-                Livewire.on('refreshEditor', content => {
-                    editor.setData(content);
-                });
-
-            })
-            .catch(error => {
-                console.error(error);
+            // Sync editor → Livewire
+            editor.model.document.on('change:data', () => {
+                @this.set('description', editor.getData(), false);
             });
 
-    });
+            // Sync Livewire → editor (for edit mode)
+            Livewire.on('refreshEditor', content => {
+                editor.setData(content ?? '');
+            });
+        })
+        .catch(error => console.error(error));
+});
 </script>
+
 
 </div>

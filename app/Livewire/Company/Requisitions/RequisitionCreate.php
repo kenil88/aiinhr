@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Company\Requisitions;
 
+use App\Models\Job;
 use Livewire\Component;
 use App\Models\Requisition;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout('layouts.app-sidebar')]
 class RequisitionCreate extends Component
@@ -65,8 +67,8 @@ class RequisitionCreate extends Component
             'status' => $status,
 
             // multi-tenant safe
-            'company_id' => auth()->user()->company_id,
-            'requested_by' => auth()->id(),
+            'company_id' => Auth::user()->company_id,
+            'requested_by' => Auth::id(),
         ]);
     }
 

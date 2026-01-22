@@ -25,7 +25,7 @@ class JobsIndex extends Component
     public function render()
     {
         return view('livewire.company.jobs.jobs-index', [
-            'jobs' => Job::where('company_id', auth()->user()->company_id)
+            'jobs' => Job::where('company_id', Auth::user()->company_id)
                 ->withCount('applications')
                 ->latest()
                 ->get(),
@@ -35,6 +35,6 @@ class JobsIndex extends Component
 
     public function getCanCreateJobProperty()
     {
-        return CompanyLimits::canCreateJob(auth()->user()->company);
+        return CompanyLimits::canCreateJob(Auth::user()->company);
     }
 }

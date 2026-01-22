@@ -19,6 +19,7 @@ class Job extends Model
         'experience_level',
         'salary_min',
         'salary_max',
+        'requisition_id',
         'status',
         'created_by',
     ];
@@ -35,5 +36,9 @@ class Job extends Model
     public function stages()
     {
         return $this->hasMany(HiringStage::class)->orderBy('sort_order');
+    }
+    public function requisition()
+    {
+        return $this->belongsTo(Requisition::class);
     }
 }
