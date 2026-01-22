@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Company\Candidates;
 
+use App\Models\Application;
 use Livewire\Component;
 use App\Models\Candidate;
 use App\Models\CandidateActivity;
@@ -14,6 +15,7 @@ class CandidateShow extends Component
     public Candidate $candidate;
     public $activities = [];
     public $noteText = '';
+    public ?Application $application = null;
 
     public function mount(Candidate $candidate)
     {
@@ -29,6 +31,17 @@ class CandidateShow extends Component
             'notes.user'
         ]);
 
+        $this->application = Application::where('candidate_id', $this->candidate->id)
+            ->with([
+                'candidate',
+                'job',
+                'stage',
+                'stageHistories.fromStage',
+                'stageHistories.toStage',
+                'stageHistories.movedBy',
+            ])
+            ->latest()
+            ->first();
 
         $this->activities = CandidateActivity::where('candidate_id', $this->candidate->id)
             ->orderBy('created_at', 'desc')

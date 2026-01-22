@@ -51,4 +51,9 @@ class Application extends Model
     {
         return $this->belongsTo(HiringStage::class, 'stage_id');
     }
+
+    public function stageHistories()
+    {
+        return $this->hasMany(ApplicationStageHistory::class);
+    }
 }

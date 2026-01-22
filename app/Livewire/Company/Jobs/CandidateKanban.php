@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Job;
 use App\Models\HiringStage;
 use App\Models\Application;
+use App\Models\ApplicationStageHistory;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
@@ -29,6 +30,17 @@ class CandidateKanban extends Component
         $application = Application::findOrFail($applicationId);
 
         abort_unless($application->job_id === $this->job->id, 403);
+
+        if ($application->stage_id == $stageId) {
+            return;
+        }
+
+        ApplicationStageHistory::create([
+            'application_id' => $application->id,
+            'from_stage_id'  => $application->stage_id,
+            'to_stage_id'    => $stageId,
+            'moved_by'       => Auth::user(),
+        ]);
 
         $application->update([
             'stage_id' => $stageId,

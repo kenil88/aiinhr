@@ -126,4 +126,48 @@
         </p>
     @endif
 </div>
+
+<div class="bg-white shadow-sm rounded-lg border border-gray-200 mt-6">
+    <div class="px-4 py-3 border-b border-gray-200">
+        <h3 class="text-sm font-semibold text-gray-900">
+            Stage History
+        </h3>
+    </div>
+
+    <div class="px-4 py-4">
+        @if($application->stageHistories->isEmpty())
+            <p class="text-sm text-gray-500">
+                No stage changes yet.
+            </p>
+        @else
+            <ol class="relative border-l border-gray-200 space-y-4">
+                @foreach($application->stageHistories->sortByDesc('created_at') as $log)
+                    <li class="ml-4">
+                        <span class="absolute -left-1.5 h-3 w-3 rounded-full bg-indigo-500"></span>
+
+                        <p class="text-sm text-gray-800">
+                            <span class="font-medium">
+                                {{ $log->movedBy->name }}
+                            </span>
+                            moved candidate
+                            from
+                            <span class="font-medium">
+                                {{ $log->fromStage->name ?? 'Initial' }}
+                            </span>
+                            to
+                            <span class="font-medium">
+                                {{ $log->toStage->name }}
+                            </span>
+                        </p>
+
+                        <p class="text-xs text-gray-500">
+                            {{ $log->created_at->format('d M Y, h:i A') }}
+                        </p>
+                    </li>
+                @endforeach
+            </ol>
+        @endif
+    </div>
+</div>
+
 </div>
