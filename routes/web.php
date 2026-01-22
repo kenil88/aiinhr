@@ -11,11 +11,14 @@ use App\Livewire\Admin\JobsIndex;
 use App\Livewire\Company\Applications\ApplicationShow;
 use App\Livewire\Company\Candidates\CandidateShow;
 use App\Livewire\Company\Candidates\CandidatesIndex;
+use App\Livewire\Company\Jobs\CandidateKanban;
+use App\Livewire\Company\Jobs\HiringStages;
 use App\Livewire\Company\Jobs\JobApplications as CompanyJobApplications;
 use App\Livewire\Company\Jobs\JobCreateFromRequisition;
 use App\Livewire\Company\TeamMembers;
 use App\Livewire\Dashboard\HrDashboard;
 use App\Livewire\Company\Jobs\JobForm;
+use App\Livewire\Company\Jobs\JobShow;
 use App\Livewire\Company\Jobs\JobsIndex as CompanyJobsIndex;
 use App\Livewire\Company\Jobs\JobStages;
 use App\Livewire\Company\Profile\CompanyProfileView;
@@ -146,6 +149,24 @@ Route::middleware(['auth', 'verified', 'company'])
 Route::middleware(['auth', 'verified', 'company'])
     ->get('/company/requisitions/{requisition}/create-job', JobCreateFromRequisition::class)
     ->name('company.requisitions.create-job');
+
+Route::middleware(['auth', 'company'])
+    ->prefix('company/jobs')
+    ->name('company.jobs.')
+    ->group(function () {
+
+        // ✅ SPECIFIC routes FIRST
+        Route::get('{job}/candidates', CandidateKanban::class)
+            ->name('candidates');
+
+        Route::get('{job}/stages', HiringStages::class)
+            ->name('stages');
+
+        // ✅ GENERIC route LAST
+        Route::get('{job}', JobShow::class)
+            ->name('show');
+    });
+
 
 /*
 |--------------------------------------------------------------------------

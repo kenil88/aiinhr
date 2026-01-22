@@ -49,6 +49,6 @@ class Application extends Model
     }
     public function stage()
     {
-        return $this->belongsTo(HiringStage::class);
+        return $this->belongsTo(HiringStage::class, 'stage_id');
     }
 }

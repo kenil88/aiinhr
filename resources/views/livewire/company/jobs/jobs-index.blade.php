@@ -63,9 +63,9 @@
                             </td>
 
                             <td class="px-6 py-4 whitespace-nowrap text-center">
-                                <a href="{{ route('company.jobs.applications', $job->id) }}"
+                                <a href="{{ route('company.jobs.candidates', $job->id) }}"
                                    class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                    {{ $job->applications_count }} Applicants
+                                    {{ $job->applications_count }} Candidates
                                 </a>
                             </td>
 
@@ -78,6 +78,9 @@
                                     class="{{ $job->status === 'open' ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900' }}">
                                     {{ $job->status === 'open' ? 'Close' : 'Open' }}
                                 </button>
+                                <a href="{{ route('company.jobs.show', $job) }}" class="text-indigo-600 hover:text-indigo-900">
+                                    View
+                                </a>
                             </td>
                         </tr>
                     @empty
