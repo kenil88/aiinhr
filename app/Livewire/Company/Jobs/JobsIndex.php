@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class JobsIndex extends Component
 {
     public function toggleStatus($jobId)
@@ -24,7 +24,7 @@ class JobsIndex extends Component
 
     public function render()
     {
-        return view('livewire.company.jobs.jobs-index', [
+        return view('admin.livewire.company.jobs.jobs-index', [
             'jobs' => Job::where('company_id', Auth::user()->company_id)
                 ->withCount('applications')
                 ->latest()

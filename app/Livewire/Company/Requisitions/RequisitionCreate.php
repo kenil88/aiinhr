@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class RequisitionCreate extends Component
 {
     public $job_title;
@@ -74,6 +74,6 @@ class RequisitionCreate extends Component
 
     public function render()
     {
-        return view('livewire.company.requisitions.requisition-create');
+        return view('admin.livewire.company.requisitions.requisition-create');
     }
 }

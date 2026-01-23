@@ -7,7 +7,7 @@ use App\Models\HiringStage;
 use App\Models\Job;
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class HiringStages extends Component
 {
     public Job $job;
@@ -60,7 +60,7 @@ class HiringStages extends Component
 
     public function render()
     {
-        return view('livewire.company.jobs.hiring-stages', [
+        return view('admin.livewire.company.jobs.hiring-stages', [
             'stages' => HiringStage::where('job_id', $this->job->id)
                 ->where('is_active', true)
                 ->orderBy('sort_order')

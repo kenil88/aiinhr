@@ -8,7 +8,7 @@ use App\Models\HiringStage;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class JobStages extends Component
 {
     public Job $job;
@@ -52,7 +52,7 @@ class JobStages extends Component
 
     public function render()
     {
-        return view('livewire.company.jobs.job-stages', [
+        return view('admin.livewire.company.jobs.job-stages', [
             'stages' => $this->job->stages()->orderBy('sort_order')->get(),
         ]);
     }

@@ -8,7 +8,7 @@ use App\Models\Job;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class JobCreateFromRequisition extends Component
 {
     public Requisition $requisition;
@@ -76,6 +76,6 @@ class JobCreateFromRequisition extends Component
 
     public function render()
     {
-        return view('livewire.company.jobs.job-create-from-requisition');
+        return view('admin.livewire.company.jobs.job-create-from-requisition');
     }
 }

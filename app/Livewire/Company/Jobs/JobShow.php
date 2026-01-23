@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class JobShow extends Component
 {
     public Job $job;
@@ -29,6 +29,6 @@ class JobShow extends Component
 
     public function render()
     {
-        return view('livewire.company.jobs.job-show');
+        return view('admin.livewire.company.jobs.job-show');
     }
 }

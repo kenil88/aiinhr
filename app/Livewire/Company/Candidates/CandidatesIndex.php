@@ -13,7 +13,7 @@ use Livewire\Attributes\Layout;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class CandidatesIndex extends Component
 {
     use WithFileUploads;
@@ -64,7 +64,7 @@ class CandidatesIndex extends Component
             });
         }
 
-        return view('livewire.company.candidates.candidates-index', [
+        return view('admin.livewire.company.candidates.candidates-index', [
             'candidates' => $query->paginate($this->perPage),
         ]);
     }

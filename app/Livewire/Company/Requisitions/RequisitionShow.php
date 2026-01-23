@@ -7,7 +7,7 @@ use App\Models\Requisition;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class RequisitionShow extends Component
 {
     public Requisition $requisition;
@@ -49,6 +49,6 @@ class RequisitionShow extends Component
 
     public function render()
     {
-        return view('livewire.company.requisitions.requisition-show');
+        return view('admin.livewire.company.requisitions.requisition-show');
     }
 }

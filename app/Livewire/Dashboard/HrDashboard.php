@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class HrDashboard extends Component
 {
     public function render()
@@ -16,7 +16,7 @@ class HrDashboard extends Component
         $companyId = Auth::user()->company_id;
         $user = Auth::user();
 
-        return view('livewire.dashboard.hr-dashboard', [
+        return view('admin.livewire.dashboard.hr-dashboard', [
 
             // Open jobs
             'activeJobs' => Job::where('company_id', $companyId)

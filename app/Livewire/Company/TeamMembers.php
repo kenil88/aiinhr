@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class TeamMembers extends Component
 {
     public $name;
@@ -77,7 +77,7 @@ class TeamMembers extends Component
 
     public function render()
     {
-        return view('livewire.company.team-members', [
+        return view('admin.livewire.company.team-members', [
             'members' => User::where('company_id', auth()->user()->company_id)->get(),
         ]);
     }

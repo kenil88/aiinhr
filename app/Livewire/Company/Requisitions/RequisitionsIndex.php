@@ -8,7 +8,7 @@ use App\Models\Requisition;
 use Livewire\Attributes\Layout;
 use Livewire\WithPagination;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class RequisitionsIndex extends Component
 {
     use WithPagination;
@@ -57,7 +57,7 @@ class RequisitionsIndex extends Component
             $query->where('status', $this->statusFilter);
         }
 
-        return view('livewire.company.requisitions.requisitions-index', [
+        return view('admin.livewire.company.requisitions.requisitions-index', [
             'requisitions' => $query->paginate(10),
         ]);
     }

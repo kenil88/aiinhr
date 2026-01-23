@@ -8,7 +8,7 @@ use App\Models\CandidateActivity;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class ApplicationShow extends Component
 {
     public Application $application;
@@ -40,7 +40,7 @@ class ApplicationShow extends Component
 
     public function render()
     {
-        return view('livewire.company.applications.application-show');
+        return view('admin.livewire.company.applications.application-show');
     }
 
     public function updateStage()

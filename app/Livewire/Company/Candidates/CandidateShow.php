@@ -9,7 +9,7 @@ use App\Models\CandidateActivity;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 
-#[Layout('layouts.app-sidebar')]
+#[Layout('admin.layouts.app-sidebar')]
 class CandidateShow extends Component
 {
     public Candidate $candidate;
@@ -50,7 +50,7 @@ class CandidateShow extends Component
 
     public function render()
     {
-        return view('livewire.company.candidates.candidate-show');
+        return view('admin.livewire.company.candidates.candidate-show');
     }
 
     public function addNote()

@@ -19,7 +19,7 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+    <body class="bg-white dark:bg-gray-900">
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
@@ -49,64 +49,236 @@
                 </nav>
             @endif
         </header>
-        <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
-            <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row gap-12 lg:gap-0">
-                <div class="flex-1 flex flex-col justify-center lg:pr-10">
-                    <h1 class="text-4xl font-bold tracking-tight text-[#1b1b18] dark:text-[#EDEDEC] sm:text-5xl mb-6">
-                        Modern Recruiting for Modern Teams
-                    </h1>
-                    <p class="text-lg leading-8 text-[#706f6c] dark:text-[#A1A09A] mb-8">
-                        Simplify your hiring pipeline. Track candidates, schedule interviews, and collaborate with your team in one unified platform.
-                    </p>
-                    <div class="flex items-center gap-x-6">
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="rounded-md bg-[#f53003] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#d92902] transition-colors">
-                                Start Hiring Free
-                            </a>
-                        @endif
-                        <a href="#" class="text-sm font-semibold leading-6 text-[#1b1b18] dark:text-[#EDEDEC] hover:underline">
-                            View Demo <span aria-hidden="true">→</span>
-                        </a>
+        <main>
+            <!-- HERO SECTION -->
+            <div class="relative isolate overflow-hidden pt-14">
+                <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
+                    <div class="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
+                        <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">Hiring at Scale, Without the Chaos</h1>
+                        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">A powerful Applicant Tracking System built for mid-size companies to hire faster, collaborate better, and make data-driven hiring decisions.</p>
+                        <div class="mt-10 flex items-center gap-x-6">
+                            <a href="#" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Request a Demo</a>
+                            <a href="#" class="text-sm font-semibold leading-6 text-gray-900 dark:text-white">View Features <span aria-hidden="true">→</span></a>
+                        </div>
+                        <div class="mt-10 text-sm text-gray-600 dark:text-gray-400">
+                            Designed for growing teams with 50–500 employees. Implementation in under 7 days.
+                        </div>
                     </div>
-                    <div class="mt-10 flex items-center gap-x-4">
-                        <div class="flex -space-x-2 overflow-hidden">
-                            <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#0a0a0a]" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                            <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#0a0a0a]" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
-                            <img class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-[#0a0a0a]" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80" alt=""/>
-                        </div>
-                        <div class="text-sm leading-6 text-[#706f6c] dark:text-[#A1A09A]">
-                            Trusted by <span class="font-semibold text-[#1b1b18] dark:text-[#EDEDEC]">500+</span> companies
-                        </div>
+                    <div class="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
+                        <img src="https://tailwindui.com/img/component-images/project-app-screenshot.png" alt="" class="mx-auto w-[35rem] max-w-full rounded-2xl">
                     </div>
                 </div>
-                <div class="flex-1 relative flex items-center justify-center">
-                    <div class="relative w-full max-w-sm rounded-xl bg-white dark:bg-[#161615] shadow-2xl border border-gray-200 dark:border-[#3E3E3A] p-6 rotate-2 hover:rotate-0 transition-transform duration-500 ease-out">
-                        <div class="flex items-center justify-between mb-6">
-                            <div class="flex items-center gap-3">
-                                <div class="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">JS</div>
-                                <div>
-                                    <div class="font-semibold text-[#1b1b18] dark:text-[#EDEDEC]">Jane Smith</div>
-                                    <div class="text-xs text-[#706f6c] dark:text-[#A1A09A]">Senior Product Designer</div>
-                                </div>
-                            </div>
-                            <span class="inline-flex items-center rounded-full bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20">Hired</span>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="h-2 bg-gray-100 dark:bg-gray-800 rounded w-full"></div>
-                            <div class="h-2 bg-gray-100 dark:bg-gray-800 rounded w-5/6"></div>
-                            <div class="h-2 bg-gray-100 dark:bg-gray-800 rounded w-4/6"></div>
-                        </div>
-                        <div class="mt-6 flex gap-3">
-                            <div class="flex-1 h-8 bg-[#f53003] rounded-md opacity-10"></div>
-                            <div class="flex-1 h-8 bg-gray-100 dark:bg-gray-800 rounded-md"></div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+            </div>
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+            <!-- SOCIAL PROOF -->
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-2xl lg:max-w-none">
+                        <h2 class="text-lg font-semibold leading-8 text-gray-900 dark:text-white text-center">Trusted by fast-growing teams across industries</h2>
+                        <p class="text-center mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Technology • Manufacturing • Healthcare • Professional Services</p>
+                        <div class="mx-auto mt-10 grid grid-cols-4 items-center gap-x-8 gap-y-10 sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:grid-cols-5">
+                            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-400.svg" alt="Transistor" width="158" height="48">
+                            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-400.svg" alt="Reform" width="158" height="48">
+                            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-400.svg" alt="Tuple" width="158" height="48">
+                            <img class="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-400.svg" alt="SavvyCal" width="158" height="48">
+                            <img class="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1" src="https://tailwindui.com/img/logos/158x48/statamic-logo-gray-400.svg" alt="Statamic" width="158" height="48">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THE PROBLEM -->
+            <div class="overflow-hidden py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 items-center">
+                        <div class="lg:pr-8 lg:pt-4">
+                            <div class="lg:max-w-lg">
+                                <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">THE PROBLEM</h2>
+                                <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Hiring gets complicated as your company grows</p>
+                                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">When teams scale, hiring becomes harder to manage.</p>
+                                <ul role="list" class="mt-8 space-y-4 text-gray-600 dark:text-gray-300">
+                                    <li class="flex gap-x-3"><span><strong class="font-semibold text-gray-900 dark:text-white">Multiple roles, multiple stakeholders</strong></span></li>
+                                    <li class="flex gap-x-3"><span><strong class="font-semibold text-gray-900 dark:text-white">No clear visibility into hiring pipelines</strong></span></li>
+                                    <li class="flex gap-x-3"><span><strong class="font-semibold text-gray-900 dark:text-white">Hiring managers working in silos</strong></span></li>
+                                    <li class="flex gap-x-3"><span><strong class="font-semibold text-gray-900 dark:text-white">Manual follow-ups slowing everything down</strong></span></li>
+                                    <li class="flex gap-x-3"><span><strong class="font-semibold text-gray-900 dark:text-white">No reliable hiring metrics for leadership</strong></span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <img src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png" alt="Product screenshot" class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0" width="2432" height="1442">
+                    </div>
+                </div>
+            </div>
+
+            <!-- THE SOLUTION -->
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-2xl lg:text-center">
+                        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">THE SOLUTION</h2>
+                        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">One platform to manage your entire hiring process</p>
+                        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">Our ATS brings structure, visibility, and speed to hiring—without enterprise-level complexity.</p>
+                    </div>
+                    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                        <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                            <div class="flex flex-col"><dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Centralized hiring pipeline for all roles</dt></div>
+                            <div class="flex flex-col"><dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Seamless collaboration between HR and hiring managers</dt></div>
+                            <div class="flex flex-col"><dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Automated candidate communication</dt></div>
+                            <div class="flex flex-col"><dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Real-time insights into hiring performance</dt></div>
+                            <div class="flex flex-col"><dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Scales as your organization grows</dt></div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEY FEATURES -->
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-2xl lg:text-center">
+                        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">KEY FEATURES</h2>
+                        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Built for the needs of mid-size teams</p>
+                    </div>
+                    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+                        <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+                            <div class="relative pl-16">
+                                <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">AI Resume Screening</dt>
+                                <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Automatically shortlist candidates based on job requirements.</dd>
+                            </div>
+                            <div class="relative pl-16">
+                                <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Collaborative Hiring</dt>
+                                <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Assign roles, share feedback, and align decisions across teams.</dd>
+                            </div>
+                            <div class="relative pl-16">
+                                <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Custom Hiring Pipelines</dt>
+                                <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Create workflows that match how your company actually hires.</dd>
+                            </div>
+                            <div class="relative pl-16">
+                                <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Interview Scheduling</dt>
+                                <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Coordinate interviews faster with automated scheduling.</dd>
+                            </div>
+                            <div class="relative pl-16">
+                                <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Hiring Analytics & Reports</dt>
+                                <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Track time-to-hire, pipeline health, and source performance.</dd>
+                            </div>
+                            <div class="relative pl-16">
+                                <dt class="text-base font-semibold leading-7 text-gray-900 dark:text-white">Role-Based Access Control</dt>
+                                <dd class="mt-2 text-base leading-7 text-gray-600 dark:text-gray-300">Ensure the right people see the right data.</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HOW IT WORKS -->
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-2xl lg:text-center">
+                        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">HOW IT WORKS</h2>
+                        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">A simple, structured hiring workflow</p>
+                    </div>
+                    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                        <dl class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                            <div class="flex flex-col-reverse"><dt class="text-base leading-7 text-gray-600 dark:text-gray-300">Set up roles and invite hiring managers to collaborate.</dt><dd class="text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">1. Create Jobs & Assign Teams</dd></div>
+                            <div class="flex flex-col-reverse"><dt class="text-base leading-7 text-gray-600 dark:text-gray-300">Use AI and filters to identify top talent faster.</dt><dd class="text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">2. Screen & Shortlist Candidates</dd></div>
+                            <div class="flex flex-col-reverse"><dt class="text-base leading-7 text-gray-600 dark:text-gray-300">Collect structured feedback and compare candidates easily.</dt><dd class="text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">3. Interview & Evaluate</dd></div>
+                            <div class="flex flex-col-reverse"><dt class="text-base leading-7 text-gray-600 dark:text-gray-300">Make data-driven decisions and close roles faster.</dt><dd class="text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">4. Hire with Confidence</dd></div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT PREVIEW SECTION -->
+            <div class="relative -z-10 mt-32 px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Full visibility into your hiring performance</h2>
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">From open roles to final offers, everything is visible in one dashboard. Time-to-hire trends, pipeline bottlenecks, candidate quality insights, hiring manager performance. Built for HR leaders, founders, and operations teams who need clarity.</p>
+                </div>
+                <div class="mt-16 flow-root sm:mt-24">
+                    <div class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                        <img src="https://tailwindui.com/img/component-images/project-app-screenshot.png" alt="App screenshot" width="2432" height="1442" class="rounded-md shadow-2xl ring-1 ring-gray-900/10">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECURITY & RELIABILITY -->
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-2xl lg:text-center">
+                        <h2 class="text-base font-semibold leading-7 text-indigo-600 dark:text-indigo-400">SECURITY & RELIABILITY</h2>
+                        <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Enterprise-grade security without the complexity</p>
+                        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">Your hiring data stays protected—always.</p>
+                    </div>
+                    <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+                        <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                            <div class="flex flex-col"><dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">Secure cloud infrastructure</dt></div>
+                            <div class="flex flex-col"><dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">Data encryption at rest and in transit</dt></div>
+                            <div class="flex flex-col"><dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">Role-based permissions</dt></div>
+                            <div class="flex flex-col"><dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">Compliance-ready architecture</dt></div>
+                            <div class="flex flex-col"><dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">Dedicated onboarding & support</dt></div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TESTIMONIAL -->
+            <div class="py-24 sm:py-32">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-xl text-center">
+                        <p class="text-lg font-semibold leading-8 tracking-tight text-indigo-600 dark:text-indigo-400">Testimonial</p>
+                        <blockquote class="mt-10 text-xl font-semibold leading-8 tracking-tight text-gray-900 dark:text-white sm:text-2xl sm:leading-9">
+                            <p>“We reduced our hiring time by 40% and finally got complete visibility across all open roles. Our hiring managers love how easy it is to collaborate.”</p>
+                        </blockquote>
+                        <figcaption class="mt-10">
+                            <div class="mt-4 flex items-center justify-center space-x-3 text-base">
+                                <div class="font-semibold text-gray-900 dark:text-white">HR Manager</div>
+                                <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900 dark:fill-gray-300"><circle cx="1" cy="1" r="1" /></svg>
+                                <div class="text-gray-600 dark:text-gray-400">Mid-Size Technology Company</div>
+                            </div>
+                        </figcaption>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WHO IT’S FOR -->
+            <div class="py-24 sm:py-32">
+                <div class="relative isolate">
+                    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                        <div class="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-black/10 dark:ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20">
+                            <div class="w-full flex-auto">
+                                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">Perfect for teams that are growing fast</h2>
+                                <ul role="list" class="mt-8 grid grid-cols-1 gap-4 text-lg leading-6 text-gray-600 dark:text-gray-300 sm:grid-cols-2">
+                                    <li class="flex gap-x-3">Mid-size companies (50–500 employees)</li>
+                                    <li class="flex gap-x-3">Multi-department hiring teams</li>
+                                    <li class="flex gap-x-3">HR teams managing high hiring volume</li>
+                                    <li class="flex gap-x-3">Companies moving beyond spreadsheets and email</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FINAL CTA -->
+            <div class="py-16 sm:py-24">
+                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div class="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+                        <h2 class="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">Build a scalable hiring process today</h2>
+                        <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-300">See how our ATS can help your team hire faster, smarter, and with confidence.</p>
+                        <div class="mt-10 flex items-center justify-center gap-x-6">
+                            <a href="#" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Request a Demo</a>
+                            <a href="#" class="text-sm font-semibold leading-6 text-white">Talk to Sales <span aria-hidden="true">→</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="dark:bg-gray-900" aria-labelledby="footer-heading">
+            <h2 id="footer-heading" class="sr-only">Footer</h2>
+            <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
+                <div class="mt-16 border-t border-gray-900/10 dark:border-white/10 pt-8 sm:mt-20 lg:mt-24">
+                    <p class="text-xs leading-5 text-gray-500 dark:text-gray-400">&copy; {{ date('Y') }} {{ config('app.name') }}. Purpose-built for mid-size companies that are serious about hiring.</p>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
