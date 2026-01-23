@@ -228,6 +228,21 @@
                     </div>
                 </div>
             </div>
+
+            <h3 class="text-sm font-semibold text-gray-900 mt-6">Stage History</h3>
+
+            <ul class="mt-3 space-y-2">
+                @foreach($application->stageHistories as $history)
+                    <li class="text-sm text-gray-600">
+                        {{ $history->fromStage->name }}
+                        →
+                        {{ $history->toStage->name }}
+                        by {{ $history->movedBy->name }}
+                        ({{ $history->created_at->diffForHumans() }})
+                    </li>
+                @endforeach
+            </ul>
+
         </div>
     </div>
 </div>

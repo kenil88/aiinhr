@@ -24,17 +24,19 @@
             <!-- Draggable Area -->
             <div
                 wire:ignore
-                x-data
+                x-data="{ stageId: {{ $stage->id }} }"
                 x-init="
+                    const root = $el.closest('[wire\\:id]');
+                    const component = Livewire.find(root.getAttribute('wire:id'));
+
                     new Sortable($el, {
                         group: 'candidates',
                         animation: 150,
-                        ghostClass: 'bg-indigo-50',
-                        onAdd: (e) => {
-                            let applicationId = e.item.dataset.id
-                            $wire.moveCandidate(applicationId, {{ $stage->id }})
+                        onEnd: (e) => {
+                            let applicationId = e.item.dataset.id;
+                            component.call('moveCandidate', applicationId, stageId);
                         }
-                    })
+                    });
                 "
                 class="flex-1 overflow-y-auto p-3 space-y-3 min-h-[100px]"
             >

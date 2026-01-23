@@ -8,7 +8,9 @@ use App\Models\HiringStage;
 use App\Models\Application;
 use App\Models\ApplicationStageHistory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 
 #[Layout('layouts.app-sidebar')]
 class CandidateKanban extends Component
@@ -27,6 +29,11 @@ class CandidateKanban extends Component
 
     public function moveCandidate($applicationId, $stageId)
     {
+        Log::info('MOVE CANDIDATE', [
+            'application_id' => $applicationId,
+            'to_stage' => $stageId,
+        ]);
+
         $application = Application::findOrFail($applicationId);
 
         abort_unless($application->job_id === $this->job->id, 403);
@@ -35,16 +42,18 @@ class CandidateKanban extends Component
             return;
         }
 
-        ApplicationStageHistory::create([
-            'application_id' => $application->id,
-            'from_stage_id'  => $application->stage_id,
-            'to_stage_id'    => $stageId,
-            'moved_by'       => Auth::user(),
-        ]);
+        // ApplicationStageHistory::create([
+        //     'application_id' => $application->id,
+        //     'from_stage_id'  => $application->stage_id,
+        //     'to_stage_id'    => $stageId,
+        //     'moved_by'       => Auth::user(),
+        // ]);
 
         $application->update([
             'stage_id' => $stageId,
         ]);
+
+        $this->dispatch('$refresh');
     }
 
     public function render()
@@ -59,5 +68,13 @@ class CandidateKanban extends Component
                 ->with('candidate')
                 ->get(),
         ]);
+    }
+
+
+
+    #[On('candidateMoved')]
+    public function handleCandidateMoved($applicationId, $stageId)
+    {
+        $this->moveCandidate($applicationId, $stageId);
     }
 }
