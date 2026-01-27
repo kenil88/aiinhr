@@ -9,12 +9,12 @@ use App\Models\User;
 use App\Models\Application;
 use App\Models\Job;
 
-#[Layout('layouts.admin-sidebar')]
+#[Layout('admin.layouts.admin-sidebar')]
 class AdminDashboard extends Component
 {
     public function render()
     {
-        return view('livewire.admin.admin-dashboard', [
+        return view('admin.livewire.admin.admin-dashboard', [
             'totalCompanies' => Company::count(),
             'activeCompanies' => Company::where('is_active', true)->count(),
             'disabledCompanies' => Company::where('is_active', false)->count(),

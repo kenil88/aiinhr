@@ -34,7 +34,7 @@ use App\Livewire\Company\Requisitions\RequisitionsIndex;
 */
 
 Route::get('/', function () {
-    return view('frontend.welcome');
+    return view('frontend.home');
 });
 
 /*
