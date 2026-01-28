@@ -6,7 +6,7 @@ use App\Models\Job;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.admin-sidebar')]
+#[Layout('admin.layouts.admin-sidebar')]
 class JobsIndex extends Component
 {
     public $selectedJob = null;
@@ -26,7 +26,7 @@ class JobsIndex extends Component
 
     public function render()
     {
-        return view('livewire.admin.jobs-index', [
+        return view('admin.livewire.admin.jobs-index', [
             'jobs' => Job::with('company')
                 ->withCount('applications')
                 ->latest()

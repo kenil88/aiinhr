@@ -6,7 +6,7 @@ use App\Models\Company;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.admin-sidebar')]
+#[Layout('admin.layouts.admin-sidebar')]
 class CompaniesIndex extends Component
 {
     public $selectedCompany = null;
@@ -26,7 +26,7 @@ class CompaniesIndex extends Component
 
     public function render()
     {
-        return view('livewire.admin.companies-index', [
+        return view('admin.livewire.admin.companies-index', [
             'companies' => Company::withCount([
                 'users',
                 'jobs'
