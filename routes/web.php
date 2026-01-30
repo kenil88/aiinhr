@@ -44,7 +44,7 @@ Route::get('/', function () {
 */
 Route::middleware(['auth', 'company', 'active', 'company.active', 'verified'])->group(function () {
 
-    Route::get('/admin/dashboard', HrDashboard::class)
+    Route::get('/dashboard', HrDashboard::class)
         ->name('admin.admin.dashboard');
 
     Route::get('/team', TeamMembers::class)
