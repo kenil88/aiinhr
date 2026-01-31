@@ -25,7 +25,7 @@
                 <h3 class="text-lg font-medium text-gray-900">Workspace Info</h3>
             </div>
             
-            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm divide-y divide-gray-100">
+            <div class="rounded-xl border border-gray-200 bg-white shadow-sm divide-y divide-gray-100">
                 <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                     <span class="text-sm font-medium text-gray-900">Logo</span>
                     <div class="flex sm:justify-end">
@@ -63,7 +63,18 @@
                 
                 <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                     <div class="flex items-center gap-2">
-                        <span class="text-sm font-medium text-gray-900">Website</span>
+                        <span class="text-sm font-medium text-gray-900">Public link</span>
+                        <div class="group relative flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400 cursor-help">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 16v-4"></path>
+                                <path d="M12 8h.01"></path>
+                            </svg>
+                            <div class="absolute bottom-full left-0 mb-2 hidden w-64 rounded-md bg-gray-900 p-2 text-xs text-white shadow-lg group-hover:block z-50 text-center">
+                                This link shows all live jobs and can be shared with candidates.
+                                <div class="absolute -bottom-1 left-2 h-2 w-2 -translate-x-1/2 rotate-45 bg-gray-900"></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="w-full sm:w-auto sm:max-w-xs">
                         <div class="flex rounded-lg shadow-sm relative">
