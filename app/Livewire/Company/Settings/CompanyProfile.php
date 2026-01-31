@@ -61,7 +61,16 @@ class CompanyProfile extends Component
         }
 
         $this->company->name = $this->name;
+        $this->company->description = $this->description;
+        $this->company->country = $this->country;
+        $this->company->city = $this->city;
+        $this->company->address = $this->address;
+        $this->company->phone = $this->phone;
         $this->company->email = $this->email;
+        $this->company->website = $this->website;
+        $this->company->facebook = $this->facebook;
+        $this->company->twitter = $this->twitter;
+        $this->company->linkedin = $this->linkedin;
 
         $this->company->save();
 

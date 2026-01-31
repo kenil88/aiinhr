@@ -51,7 +51,7 @@
                     <span class="text-sm font-medium text-gray-900">Name</span>
                     <div class="w-full sm:w-auto sm:max-w-xs">
                         <div class="relative rounded-md shadow-sm">
-                            <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 text-sm focus:border-black focus:ring-black pr-10" placeholder="Company Name" readonly value="{{ $name ?? $company->name }}">
+                            <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 bg-white text-gray-900 text-sm focus:border-black focus:ring-black pr-10" placeholder="Workspace Name" readonly>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                                 <button type="button" @click="showNameModal = true" class="text-gray-400 hover:text-gray-600">
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
@@ -145,7 +145,7 @@
     </div>
 
     <!-- Name Change Modal -->
-    <div x-show="showNameModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
+    <div x-show="showNameModal" wire:ignore.self class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="showNameModal" @click="showNameModal = false" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -153,12 +153,14 @@
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Change workspace name</h3>
                     <div class="mt-4">
-                        <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 text-sm shadow-sm focus:border-black focus:ring-black" placeholder="Enter Workspace Name" value="{{ $company->name }}">
+                       <input type="text" wire:model.defer="name" class="block w-full rounded-lg border-gray-300 text-sm" placeholder="Enter Workspace Name">
                         @error('name') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" wire:click="save" @click="showNameModal = false" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Save</button>
+                    <button type="button" wire:click="save" @click="showNameModal = false" class="w-full inline-flex justify-center rounded-md bg-black px-4 py-2 text-white hover:bg-gray-800 sm:ml-3 sm:w-auto sm:text-sm">
+                        Save
+                    </button>
                     <button type="button" @click="showNameModal = false" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
                 </div>
             </div>
@@ -166,7 +168,7 @@
     </div>
 
     <!-- Website Change Modal -->
-    <div x-show="showWebsiteModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
+    <div x-show="showWebsiteModal" wire:ignore.self class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="showWebsiteModal" @click="showWebsiteModal = false" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
