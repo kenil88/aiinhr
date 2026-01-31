@@ -51,16 +51,7 @@ class CompanyProfile extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'country' => 'nullable|string|max:100',
-            'city' => 'nullable|string|max:100',
-            'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
             'email' => 'nullable|email',
-            'website' => 'nullable|url',
-            'facebook' => 'nullable|url',
-            'twitter' => 'nullable|url',
-            'linkedin' => 'nullable|url',
             'logo' => 'nullable|image|max:1024',
         ]);
 
@@ -70,16 +61,7 @@ class CompanyProfile extends Component
         }
 
         $this->company->name = $this->name;
-        $this->company->description = $this->description;
-        $this->company->country = $this->country;
-        $this->company->city = $this->city;
-        $this->company->address = $this->address;
-        $this->company->phone = $this->phone;
         $this->company->email = $this->email;
-        $this->company->website = $this->website;
-        $this->company->facebook = $this->facebook;
-        $this->company->twitter = $this->twitter;
-        $this->company->linkedin = $this->linkedin;
 
         $this->company->save();
 

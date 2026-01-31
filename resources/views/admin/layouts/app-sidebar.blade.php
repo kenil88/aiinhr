@@ -24,12 +24,19 @@
             <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                 <div class="flex flex-shrink-0 items-center px-4">
                     <div class="flex items-center gap-2">
-                        <div class="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center">
-                            <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
+                        @if(auth()->user()->company?->logo)
+                            <img src="{{ asset('storage/' . auth()->user()->company->logo) }}" class="h-8 w-8 rounded-lg object-cover bg-white">
+                        @else
+                            <div class="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center">
+                                <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                        @endif
+                        <div class="flex flex-col">
+                            <span class="font-bold text-gray-900 tracking-tight leading-tight">{{ auth()->user()->company?->name ?? 'ATS SaaS' }}</span>
+                            <span class="text-xs text-indigo-600 font-medium">{{ auth()->user()->company?->plan ?? 'Free Plan' }}</span>
                         </div>
-                        <span class="text-xl font-bold text-gray-900 tracking-tight">ATS SaaS</span>
                     </div>
                 </div>
                 <nav class="mt-8 flex-1 space-y-1 px-2">
@@ -40,7 +47,7 @@
                             ['route' => 'admin.company.requisitions*', 'href' => route('company.requisitions.index'), 'label' => 'Requisitions', 'icon' => 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.528a3.375 3.375 0 00-3.375 3.375v2.625m3.375-3.375v-1.875a.375.375 0 01.375-.375h1.5a.375.375 0 01.375.375v1.875m-3.375 0h3.375M9 13.5V9m0 4.5h-1.5V9h1.5M12 9v4.5m3-4.5v4.5m-6-4.5v4.5m-6 9h18c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v5.25c0 .621.504 1.125 1.125 1.125z'],
                             ['route' => 'admin.company.candidates*', 'href' => route('company.candidates.index'), 'label' => 'Talent Pool', 'icon' => 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z'],
                             ['route' => 'admin.company.team', 'label' => 'Team Members', 'icon' => 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z', 'role' => 'owner'],
-                            ['route' => 'company.profile.view', 'label' => 'Company Profile', 'icon' => 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21'],
+                            ['route' => 'company.profile.view', 'label' => 'Settings', 'icon' => 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21'],
                         ];
                     @endphp
 

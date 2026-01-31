@@ -1,108 +1,150 @@
-<div class="max-w-5xl mx-auto">
+<div class="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8" x-data="{ showNameModal: false }">
     <!-- Header Section -->
-    <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-6">
-        <div class="h-32 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
-        <div class="px-6 pb-6">
-            <div class="flex flex-col md:flex-row items-start md:items-end -mt-12 mb-4">
-                <div class="relative">
-                    @if ($company->logo)
-                        <img src="{{ asset('storage/'.$company->logo) }}" class="w-24 h-24 rounded-lg border-4 border-white shadow-md object-cover bg-white">
+    <div class="space-y-8">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Settings</h1>
+            <p class="mt-1 text-sm text-gray-500">Manage your workspace settings and profile.</p>
+        </div>
+
+        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="p-6">
+                <div class="flex w-full items-center gap-4">
+                    <span class="relative flex shrink-0 overflow-hidden rounded-full h-12 w-12 border border-gray-100">
+                    @if($company->logo)
+                        <img src="{{ asset('storage/'.$company->logo) }}" class="h-full w-full object-cover">
                     @else
-                        <div class="w-24 h-24 rounded-lg border-4 border-white shadow-md bg-gray-100 flex items-center justify-center text-gray-400 text-2xl font-bold">
-                            {{ substr($company->name, 0, 1) }}
-                        </div>
+                        <span class="flex h-full w-full items-center justify-center bg-black text-lg font-medium text-white">{{ substr($company->name, 0, 1) }}</span>
                     @endif
-                </div>
-                <div class="mt-4 md:mt-0 md:ml-4 flex-1">
-                    <h1 class="text-2xl font-bold text-gray-900">{{ $company->name }}</h1>
-                    <p class="text-gray-500 flex items-center text-sm mt-1">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        {{ $company->city }}, {{ $company->country }}
-                    </p>
-                </div>
-                @if (auth()->user()->isOwner())
-                    <div class="mt-4 md:mt-0">
-                        <a href="{{ route('company.profile.edit') }}"
-                           class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
-                            <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                            Edit Profile
-                        </a>
+                    </span>
+                    <div class="flex-1 overflow-hidden">
+                        <h2 class="truncate text-base font-semibold text-gray-900">{{ $company->name }}</h2>
+                        <p class="truncate text-sm text-gray-500">{{ $company->email }}</p>
                     </div>
-                @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-medium text-gray-900">Workspace Info</h3>
+            </div>
+            
+            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm divide-y divide-gray-100">
+                <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <span class="text-sm font-medium text-gray-900">Logo</span>
+                    <div class="flex sm:justify-end">
+                        <label class="group relative cursor-pointer">
+                        <input type="file" wire:model="logo" class="hidden">
+                            <span class="relative flex h-16 w-16 overflow-hidden rounded-lg border border-gray-200">
+                           @if ($company->logo)
+                                    <img src="{{ asset('storage/'.$company->logo) }}" class="h-full w-full object-cover">
+                            @else
+                                    <div class="flex h-full w-full items-center justify-center bg-gray-50 text-xl font-bold text-gray-400">
+                                  {{ substr($name ?? $company->name, 0, 1) }}
+                                </div>
+                            @endif
+                            </span>
+                            <div class="absolute inset-0 flex items-center justify-center rounded-lg bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5 text-white"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path><path d="m15 5 4 4"></path></svg>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <span class="text-sm font-medium text-gray-900">Name</span>
+                    <div class="w-full sm:w-auto sm:max-w-xs">
+                        <div class="flex items-center justify-end gap-3">
+                            <input type="text" wire:model="name" wire:blur="save" class="block w-full rounded-lg border-gray-300 text-sm focus:border-black focus:ring-black" placeholder="Company Name" readonly value="{{ $name ?? $company->name }}">
+                            <button type="button" @click="showNameModal = true" class="text-gray-400 hover:text-gray-600">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-medium text-gray-900">Website</span>
+                    </div>
+                    <div class="w-full sm:w-auto sm:max-w-xs">
+                        <div class="flex rounded-lg shadow-sm">
+                            <input type="text" wire:model="website" wire:blur="save" class="block w-full rounded-l-lg border-gray-300 text-sm focus:border-black focus:ring-black" placeholder="https://example.com">
+                            <a href="{{ $website ?? '#' }}" target="_blank" class="inline-flex items-center rounded-r-lg border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 hover:bg-gray-100">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <span class="text-sm font-medium text-gray-900">Plan</span>
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm text-gray-500">{{ $company->plan ?? 'Free' }}</span>
+                        <button type="button" class="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            Upgrade
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        @if (session()->has('success'))
+            <div class="rounded-lg bg-green-50 p-4 text-sm text-green-700">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
+    
+    <div class="mt-12 space-y-6">
+        <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-gray-900">Workspace Users</h3>
+            <button class="inline-flex items-center justify-center rounded-lg bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 transition-colors">
+                <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Invite User
+            </button>
+        </div>
+        
+        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="flex items-center justify-between p-4">
+                <div class="flex items-center gap-4">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-black text-sm font-medium text-white">
+                        {{ substr(auth()->user()->name, 0, 1) }}
+                    </span>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-900">{{ auth()->user()->name }}</h4>
+                        <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center rounded-md bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+                        {{ auth()->user()->role ?? 'Admin' }}
+                    </span>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Left Column: About -->
-        <div class="lg:col-span-2 space-y-6">
-            <div class="bg-white rounded-lg shadow-sm p-6">
-                <h2 class="text-lg font-semibold text-gray-900 mb-4">About Company</h2>
-                <div class="prose prose-sm max-w-none text-gray-600">
-                    {!! $company->description ?? '<p class="italic text-gray-400">No description added yet.</p>' !!}
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Column: Contact Info -->
-        <div class="space-y-6">
-            <div class="bg-white rounded-lg shadow-sm p-6">
-                <h2 class="text-lg font-semibold text-gray-900 mb-4">Contact Information</h2>
-                <ul class="space-y-3 text-sm">
-                    @if($company->website)
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-gray-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9-9a9 9 0 00-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                        <a href="{{ $company->website }}" target="_blank" class="text-indigo-600 hover:underline break-all">{{ $company->website }}</a>
-                    </li>
-                    @endif
-                    
-                    @if($company->email)
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-gray-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        <span class="text-gray-600">{{ $company->email }}</span>
-                    </li>
-                    @endif
-
-                    @if($company->phone)
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-gray-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                        <span class="text-gray-600">{{ $company->phone }}</span>
-                    </li>
-                    @endif
-
-                    @if($company->address)
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-gray-400 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span class="text-gray-600">{{ $company->address }}</span>
-                    </li>
-                    @endif
-                </ul>
-
-                @if($company->facebook || $company->twitter || $company->linkedin)
-                <div class="mt-6 pt-6 border-t border-gray-100">
-                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Social Profiles</h3>
-                    <div class="flex space-x-4">
-                        @if($company->facebook)
-                            <a href="{{ $company->facebook }}" target="_blank" class="text-gray-400 hover:text-blue-600 transition-colors">
-                                <span class="sr-only">Facebook</span>
-                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
-                            </a>
-                        @endif
-                        @if($company->twitter)
-                            <a href="{{ $company->twitter }}" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors">
-                                <span class="sr-only">Twitter</span>
-                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
-                            </a>
-                        @endif
-                        @if($company->linkedin)
-                            <a href="{{ $company->linkedin }}" target="_blank" class="text-gray-400 hover:text-blue-700 transition-colors">
-                                <span class="sr-only">LinkedIn</span>
-                                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" /></svg>
-                            </a>
-                        @endif
+    <!-- Name Change Modal -->
+    <div x-show="showNameModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div x-show="showNameModal" @click="showNameModal = false" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div x-show="showNameModal" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Change Company Name</h3>
+                    <div class="mt-4">
+                        <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 text-sm shadow-sm focus:border-black focus:ring-black" placeholder="Company Name">
+                        @error('name') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
                 </div>
-                @endif
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" wire:click="save" @click="showNameModal = false" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Save</button>
+                    <button type="button" @click="showNameModal = false" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
