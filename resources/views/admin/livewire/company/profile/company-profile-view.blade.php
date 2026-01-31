@@ -1,4 +1,4 @@
-<div class="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8" x-data="{ showNameModal: false }">
+<div class="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8" x-data="{ showNameModal: false, showWebsiteModal: false }">
     <!-- Header Section -->
     <div class="space-y-8">
         <div>
@@ -10,14 +10,10 @@
             <div class="p-6">
                 <div class="flex w-full items-center gap-4">
                     <span class="relative flex shrink-0 overflow-hidden rounded-full h-12 w-12 border border-gray-100">
-                    @if($company->logo)
-                        <img src="{{ asset('storage/'.$company->logo) }}" class="h-full w-full object-cover">
-                    @else
-                        <span class="flex h-full w-full items-center justify-center bg-black text-lg font-medium text-white">{{ substr($company->name, 0, 1) }}</span>
-                    @endif
+                        <span class="flex h-full w-full items-center justify-center bg-black text-lg font-medium text-white">{{ substr(auth()->user()->name, 0, 1) }}</span>
                     </span>
                     <div class="flex-1 overflow-hidden">
-                        <h2 class="truncate text-base font-semibold text-gray-900">{{ $company->name }}</h2>
+                        <h2 class="truncate text-base font-semibold text-gray-900">{{ auth()->user()->name }}</h2>
                         <p class="truncate text-sm text-gray-500">{{ $company->email }}</p>
                     </div>
                 </div>
@@ -54,11 +50,13 @@
                 <div class="flex flex-col gap-4 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
                     <span class="text-sm font-medium text-gray-900">Name</span>
                     <div class="w-full sm:w-auto sm:max-w-xs">
-                        <div class="flex items-center justify-end gap-3">
-                            <input type="text" wire:model="name" wire:blur="save" class="block w-full rounded-lg border-gray-300 text-sm focus:border-black focus:ring-black" placeholder="Company Name" readonly value="{{ $name ?? $company->name }}">
-                            <button type="button" @click="showNameModal = true" class="text-gray-400 hover:text-gray-600">
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                            </button>
+                        <div class="relative rounded-md shadow-sm">
+                            <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 text-sm focus:border-black focus:ring-black pr-10" placeholder="Company Name" readonly value="{{ $name ?? $company->name }}">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <button type="button" @click="showNameModal = true" class="text-gray-400 hover:text-gray-600">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,8 +66,15 @@
                         <span class="text-sm font-medium text-gray-900">Website</span>
                     </div>
                     <div class="w-full sm:w-auto sm:max-w-xs">
-                        <div class="flex rounded-lg shadow-sm">
-                            <input type="text" wire:model="website" wire:blur="save" class="block w-full rounded-l-lg border-gray-300 text-sm focus:border-black focus:ring-black" placeholder="https://example.com">
+                        <div class="flex rounded-lg shadow-sm relative">
+                            <div class="relative flex-grow focus-within:z-10">
+                                <input type="text" wire:model="website" class="block w-full rounded-l-lg border-gray-300 text-sm focus:border-black focus:ring-black pr-10" placeholder="https://example.com" readonly>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <button type="button" @click="showWebsiteModal = true" class="text-gray-400 hover:text-gray-600">
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
                             <a href="{{ $website ?? '#' }}" target="_blank" class="inline-flex items-center rounded-r-lg border border-l-0 border-gray-300 bg-gray-50 px-3 text-gray-500 hover:bg-gray-100">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                             </a>
@@ -112,7 +117,7 @@
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </span>
                     <div>
-                        <h4 class="text-sm font-medium text-gray-900">{{ auth()->user()->name }}</h4>
+                        <h4 class="text-sm font-medium text-gray-900">{{ auth()->user()->name }} (Owner)</h4>
                         <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
@@ -135,15 +140,36 @@
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <div x-show="showNameModal" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Change Company Name</h3>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Change workspace name</h3>
                     <div class="mt-4">
-                        <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 text-sm shadow-sm focus:border-black focus:ring-black" placeholder="Company Name">
+                        <input type="text" wire:model="name" class="block w-full rounded-lg border-gray-300 text-sm shadow-sm focus:border-black focus:ring-black" placeholder="Enter Workspace Name" value="{{ $company->name }}">
                         @error('name') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button type="button" wire:click="save" @click="showNameModal = false" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Save</button>
                     <button type="button" @click="showNameModal = false" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Website Change Modal -->
+    <div x-show="showWebsiteModal" class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" style="display: none;">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div x-show="showWebsiteModal" @click="showWebsiteModal = false" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div x-show="showWebsiteModal" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Change handle</h3>
+                    <div class="mt-4">
+                        <input type="text" wire:model="website" class="block w-full rounded-lg border-gray-300 text-sm shadow-sm focus:border-black focus:ring-black" placeholder="https://example.com">
+                        @error('website') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" wire:click="save" @click="showWebsiteModal = false" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-800 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Save</button>
+                    <button type="button" @click="showWebsiteModal = false" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
                 </div>
             </div>
         </div>
