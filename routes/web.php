@@ -43,9 +43,8 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'company', 'active', 'company.active', 'verified'])->group(function () {
-
     Route::get('/dashboard', HrDashboard::class)
-        ->name('admin.admin.dashboard');
+        ->name('admin.dashboard');
 
     Route::get('/team', TeamMembers::class)
         ->name('admin.company.team');
@@ -57,7 +56,7 @@ Route::middleware(['auth', 'active', 'company', 'verified'])
 
 
 Route::middleware(['auth', 'active', 'company', 'verified'])
-    ->prefix('company')
+    // ->prefix('company')
     ->name('company.')
     ->group(function () {
 
@@ -87,6 +86,18 @@ Route::middleware(['auth', 'active', 'company', 'verified'])
 
         Route::get('/company/jobs/{job}/stages', JobStages::class)
             ->name('company.jobs.stages');
+
+        Route::get('/requisitions/create', RequisitionCreate::class)
+            ->name('requisitions.create');
+
+        Route::get('/requisitions/{requisition}', RequisitionShow::class)
+            ->name('requisitions.show');
+
+        Route::get('/requisitions', RequisitionsIndex::class)
+            ->name('requisitions.index');
+
+        Route::get('/company/requisitions/{requisition}/create-job', JobCreateFromRequisition::class)
+            ->name('company.requisitions.create-job');
     });
 
 
@@ -95,17 +106,17 @@ Route::middleware(['auth', 'active', 'company', 'verified'])
 | Profile Routes (Authenticated)
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
 
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
+//     // Route::get('/profile', [ProfileController::class, 'edit'])
+//     //     ->name('profile.edit');
 
-    Route::patch('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
+//     Route::patch('/profile', [ProfileController::class, 'update'])
+//         ->name('profile.update');
 
-    Route::delete('/profile', [ProfileController::class, 'destroy'])
-        ->name('profile.destroy');
-});
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])
+//         ->name('profile.destroy');
+// });
 /*
 |--------------------------------------------------------------------------
 | Admin Routes (Platform Owner)
@@ -131,24 +142,6 @@ Route::middleware(['auth', 'admin'])
         Route::get('/applications/{application}', CandidateDetail::class)
             ->name('applications.show');
     });
-
-
-
-Route::middleware(['auth', 'verified', 'company'])
-    ->get('/company/requisitions/create', RequisitionCreate::class)
-    ->name('company.requisitions.create');
-
-Route::middleware(['auth', 'verified', 'company'])
-    ->get('/company/requisitions', RequisitionsIndex::class)
-    ->name('company.requisitions.index');
-
-Route::middleware(['auth', 'verified', 'company'])
-    ->get('/company/requisitions/{requisition}', RequisitionShow::class)
-    ->name('company.requisitions.show');
-
-Route::middleware(['auth', 'verified', 'company'])
-    ->get('/company/requisitions/{requisition}/create-job', JobCreateFromRequisition::class)
-    ->name('company.requisitions.create-job');
 
 Route::middleware(['auth', 'company'])
     ->prefix('company/jobs')

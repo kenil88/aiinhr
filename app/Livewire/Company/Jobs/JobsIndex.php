@@ -17,9 +17,13 @@ class JobsIndex extends Component
             ->where('company_id', Auth::user()->company_id)
             ->firstOrFail();
 
+        $newStatus = $job->status === 'open' ? 'closed' : 'open';
+
         $job->update([
-            'status' => $job->status === 'open' ? 'closed' : 'open',
+            'status' => $newStatus,
         ]);
+
+        $this->dispatch('toast', message: 'Job status updated successfully', type: 'success');
     }
 
     public function render()

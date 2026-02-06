@@ -13,7 +13,7 @@
         body { font-family: 'Inter', sans-serif; }
         [x-cloak] { display: none !important; }
     </style>
-
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body class="h-full">
 
@@ -47,7 +47,7 @@
                             ['route' => 'admin.company.requisitions*', 'href' => route('company.requisitions.index'), 'label' => 'Requisitions', 'icon' => 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.528a3.375 3.375 0 00-3.375 3.375v2.625m3.375-3.375v-1.875a.375.375 0 01.375-.375h1.5a.375.375 0 01.375.375v1.875m-3.375 0h3.375M9 13.5V9m0 4.5h-1.5V9h1.5M12 9v4.5m3-4.5v4.5m-6-4.5v4.5m-6 9h18c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v5.25c0 .621.504 1.125 1.125 1.125z'],
                             ['route' => 'admin.company.candidates*', 'href' => route('company.candidates.index'), 'label' => 'Talent Pool', 'icon' => 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z'],
                             ['route' => 'admin.company.team', 'label' => 'Team Members', 'icon' => 'M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z', 'role' => 'owner'],
-                            ['route' => 'company.profile.view', 'label' => 'Settings', 'icon' => 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21'],
+                            ['route' => 'company.profile', 'href' => route('company.profile.view'), 'label' => 'Settings', 'icon' => 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21'],
                         ];
                     @endphp
 
@@ -129,6 +129,34 @@
 @livewireScripts
 <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('toast', (data) => {
+
+            console.log('Toast data:', data); // 👈 debug once
+
+            Toastify({
+                text: data.message ?? 'Action completed',
+                duration: 3000,
+                gravity: 'top',
+                position: 'right',
+                close: true,
+                style: {
+                    background:
+                        data.type === 'success' ? '#16a34a' :
+                        data.type === 'error'   ? '#dc2626' :
+                        '#2563eb',
+                    borderRadius: '14px',
+                    padding: '14px 18px',
+                    boxShadow: '0 12px 28px rgba(0,0,0,.18)',
+                },
+            }).showToast();
+
+        });
+    });
+</script>
 
 </body>
 </html>

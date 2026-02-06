@@ -24,6 +24,10 @@ class CandidateKanban extends Component
             403
         );
 
+        $this->applications = Application::where('job_id', $this->job->id)
+            ->with('candidate')
+            ->get();
+
         $this->job = $job;
     }
 

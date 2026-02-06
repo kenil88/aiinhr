@@ -11,7 +11,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <!-- Styles -->
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+       
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js','resources/css/global/global.css'])
     </head>
@@ -33,5 +34,26 @@
                 {{ $slot }}
             </main>
         </div>
+ <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('toast', ({ message, type = 'success' }) => {
+            Toastify({
+                text: message,
+                duration: 3000,
+                gravity: 'top',
+                position: 'right',
+                close: true,
+                backgroundColor: type === 'success'
+                    ? '#16a34a'
+                    : type === 'error'
+                    ? '#dc2626'
+                    : '#2563eb',
+            }).showToast();
+        });
+    });
+</script>
+
     </body>
 </html>
