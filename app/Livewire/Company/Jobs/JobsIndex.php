@@ -23,7 +23,12 @@ class JobsIndex extends Component
             'status' => $newStatus,
         ]);
 
-        $this->dispatch('toast', message: 'Job status updated successfully', type: 'success');
+        session()->flash('toast', [
+            'message' => "Job has been {$newStatus} successfully",
+            'type' => 'success',
+        ]);
+
+        return redirect()->route('company.jobs');
     }
 
     public function render()

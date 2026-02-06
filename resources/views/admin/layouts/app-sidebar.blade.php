@@ -131,32 +131,30 @@
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+@if (session()->has('toast'))
 <script>
-    document.addEventListener('livewire:init', () => {
-        Livewire.on('toast', (data) => {
+    document.addEventListener('DOMContentLoaded', () => {
+        const toast = @json(session('toast'));
 
-            console.log('Toast data:', data); // 👈 debug once
-
-            Toastify({
-                text: data.message ?? 'Action completed',
-                duration: 3000,
-                gravity: 'top',
-                position: 'right',
-                close: true,
-                style: {
-                    background:
-                        data.type === 'success' ? '#16a34a' :
-                        data.type === 'error'   ? '#dc2626' :
-                        '#2563eb',
-                    borderRadius: '14px',
-                    padding: '14px 18px',
-                    boxShadow: '0 12px 28px rgba(0,0,0,.18)',
-                },
-            }).showToast();
-
-        });
+        Toastify({
+            text: toast.message ?? 'Action completed',
+            duration: 3000,
+            gravity: 'top',
+            position: 'right',
+            close: true,
+            style: {
+                background:
+                    toast.type === 'success' ? '#16a34a' :
+                    toast.type === 'error'   ? '#dc2626' :
+                    '#2563eb',
+                borderRadius: '14px',
+                padding: '14px 18px',
+                boxShadow: '0 12px 28px rgba(0,0,0,.18)',
+            },
+        }).showToast();
     });
 </script>
+@endif
 
 </body>
 </html>

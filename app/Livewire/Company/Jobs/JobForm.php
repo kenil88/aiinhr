@@ -61,8 +61,9 @@ class JobForm extends Component
     public function save()
     {
         $company = Auth::user()->company;
+        $isCreate = !$this->job?->exists;
 
-        if (!CompanyLimits::canCreateJob($company)) {
+        if ($isCreate && !CompanyLimits::canCreateJob($company)) {
             $this->addError('limit', 'You have reached the maximum number of jobs allowed for your plan.');
             return;
         }
@@ -127,6 +128,12 @@ class JobForm extends Component
                 ]);
             }
         }
+        session()->flash('toast', [
+            'message' => $isCreate
+                ? 'Job created successfully 🎉'
+                : 'Job updated successfully ✅',
+            'type' => 'success',
+        ]);
 
         return redirect()->route('company.jobs');
     }
